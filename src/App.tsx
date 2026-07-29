@@ -158,3 +158,23 @@ class FluidSolver {
         j1 = j0 + 1;
         s1 = x - i0;
         s0 = 1.0 - s1;
+        t1 = y - j0;
+        t0 = 1.0 - t1;
+        d[this.IX(i, j)] = 
+          s0 * (t0 * d0[this.IX(i0, j0)] + t1 * d0[this.IX(i0, j1)]) +
+          s1 * (t0 * d0[this.IX(i1, j0)] + t1 * d0[this.IX(i1, j1)]);
+      }
+    }
+    this.setBnd(b, d);
+  }
+  private project(u: Float32Array, v: Float32Array, p: Float32Array, div: Float32Array) {
+    const N = this.N;
+    const h = 1.0 / N;
+    for (let j = 1; j <= N; j++) {
+      for (let i = 1; i <= N; i++) {
+        if (this.obstacles[this.IX(i, j)] === 1) {
+          div[this.IX(i, j)] = 0;
+          p[this.IX(i, j)] = 0;
+        } else {
+          div[this.IX(i, j)] = -0.5 * h * (u[this.IX(i + 1, j)] - u[this.IX(i - 1, j)] + v[this.IX(i, j + 1)] - v[this.IX(i, j - 1)]);
+          p[this.IX(i, j)] = 0;
