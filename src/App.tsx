@@ -458,3 +458,23 @@ class ErosionSolver {
     for (let y = 1; y < N - 1; y++) {
       for (let x = 1; x < N - 1; x++) {
         const i = this.IX(x, y);
+        if (this.water[i] <= 0.001) continue;
+        const velSq = this.Vx[i]*this.Vx[i] + this.Vy[i]*this.Vy[i];
+        const capacity = Math.max(0.01, velSq) * 2.0;
+        if (this.sediment[i] < capacity) {
+          const amount = (capacity - this.sediment[i]) * this.erodibility * this.dt;
+          const actualErosion = Math.min(amount, this.height[i] * 0.1);
+          this.height[i] -= actualErosion;
+          this.sediment[i] += actualErosion;
+        } else {
+          const amount = (this.sediment[i] - capacity) * this.deposition * this.dt;
+          this.height[i] += amount;
+          this.sediment[i] -= amount;
+        }
+        this.water[i] *= 0.99;
+      }
+    }
+  }
+}
+class GravitySolver {
+  public numBodies: number;
