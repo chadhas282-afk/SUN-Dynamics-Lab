@@ -278,3 +278,23 @@ class ConvectionSolver {
     const a = this.dt * diff * this.N * this.N;
     this.linSolve(b, x, x0, a, 1 + 4 * a);
   }
+  private advect(b: number, d: Float32Array, d0: Float32Array, u: Float32Array, v: Float32Array, dt: number) {
+    const N = this.N;
+    let i0, j0, i1, j1;
+    let x, y, s0, t0, s1, t1;
+    let dt0 = dt * N;
+    for (let j = 1; j <= N; j++) {
+      for (let i = 1; i <= N; i++) {
+        x = i - dt0 * u[this.IX(i, j)];
+        y = j - dt0 * v[this.IX(i, j)];
+        if (x < 0.5) x = 0.5;
+        if (x > N + 0.5) x = N + 0.5;
+        i0 = Math.floor(x);
+        i1 = i0 + 1;
+        if (y < 0.5) y = 0.5;
+        if (y > N + 0.5) y = N + 0.5;
+        j0 = Math.floor(y);
+        j1 = j0 + 1;
+        s1 = x - i0;
+        s0 = 1.0 - s1;
+        t1 = y - j0;
