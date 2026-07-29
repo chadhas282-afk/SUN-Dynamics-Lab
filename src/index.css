@@ -1,0 +1,18 @@
+@theme {
+  --color-dark-900: #0f1115;
+  --color-dark-800: #161920;
+  --color-dark-700: #20242d;
+  --color-neon-blue: #00f0ff;
+  --color-neon-purple: #aa3bff;
+}
+
+:root {
+  color-scheme: dark;
+}
+
+body {
+  margin: 0;
+  background-color: var(--color-dark-900);
+  color: #e2e8f0;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  overflow: hidden;
