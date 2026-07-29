@@ -398,3 +398,23 @@ class ErosionSolver {
         }
         this.height[this.IX(x, y)] = Math.max(0, h);
         this.water[this.IX(x, y)] = 0;
+        this.sediment[this.IX(x, y)] = 0;
+        this.Vx[this.IX(x, y)] = 0;
+        this.Vy[this.IX(x, y)] = 0;
+      }
+    }
+  }
+  public step() {
+    const N = this.N;
+    const newWater = new Float32Array(this.size);
+    const newSediment = new Float32Array(this.size);
+    this.totalKineticEnergy = 0;
+    for (let i = 0; i < this.size; i++) {
+      this.water[i] += this.rainfall * this.dt;
+    }
+    for (let y = 1; y < N - 1; y++) {
+      for (let x = 1; x < N - 1; x++) {
+        const i = this.IX(x, y);
+        const h = this.height[i] + this.water[i];
+        const hL = this.height[this.IX(x-1, y)] + this.water[this.IX(x-1, y)];
+        const hR = this.height[this.IX(x+1, y)] + this.water[this.IX(x+1, y)];
