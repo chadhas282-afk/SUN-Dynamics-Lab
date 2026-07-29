@@ -478,3 +478,23 @@ class ErosionSolver {
 }
 class GravitySolver {
   public numBodies: number;
+  public G: number;
+  public dt: number;
+  public softening: number;
+  public px: Float32Array;
+  public py: Float32Array;
+  public vx: Float32Array;
+  public vy: Float32Array;
+  public ax: Float32Array;
+  public ay: Float32Array;
+  public mass: Float32Array;
+  public totalKineticEnergy: number = 0;
+  constructor(numBodies: number, G: number = 1.0, dt: number = 0.01) {
+    this.numBodies = numBodies;
+    this.G = G;
+    this.dt = dt;
+    this.softening = 1.5;
+    this.px = new Float32Array(numBodies);
+    this.py = new Float32Array(numBodies);
+    this.vx = new Float32Array(numBodies);
+    this.vy = new Float32Array(numBodies);
