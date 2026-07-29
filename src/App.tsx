@@ -38,3 +38,23 @@ class Noise {
   }
   public fbm2d(x: number, y: number, octaves: number = 4, persistence: number = 0.5): number {
     let total = 0;
+    let frequency = 1;
+    let amplitude = 1;
+    let maxValue = 0;
+    for(let i = 0; i < octaves; i++) {
+      total += this.perlin2(x * frequency, y * frequency) * amplitude;
+      maxValue += amplitude;
+      amplitude *= persistence;
+      frequency *= 2;
+    }
+    return total / maxValue;
+  }
+}
+import React, { useEffect, useRef, useState } from 'react';
+type OrbitalScenarioType = 'Galaxy' | 'Binary Star';
+type AeroBrushMode = 'Inject Fluid' | 'Draw Obstacle';
+type ErosionBrushMode = 'Raise Terrain' | 'Lower Terrain';
+type TerrainType = 'Volcanic Peak' | 'Fault Line Valley';
+import { Wind, ThermometerSun, Waves, Settings, Activity, BookOpen, Calculator, ArrowDownCircle, Layers, Globe, Droplets, Cpu, Orbit } from 'lucide-react';
+class FluidSolver {
+  public N: number;
