@@ -218,3 +218,23 @@ class ConvectionSolver {
   public T: Float32Array;
   public T0: Float32Array;
   public Vx: Float32Array;
+  public Vy: Float32Array;
+  public Vx0: Float32Array;
+  public Vy0: Float32Array;
+  public p: Float32Array;
+  public div: Float32Array;
+  public ambientT: number = 0;
+  public coriolisF: number = 0;
+  public beta: number = 0.05;
+  constructor(N: number, diffusion: number, viscosity: number, dt: number) {
+    this.N = N;
+    this.size = (N + 2) * (N + 2);
+    this.dt = dt;
+    this.diff = diffusion;
+    this.visc = viscosity;
+    this.T = new Float32Array(this.size);
+    this.T0 = new Float32Array(this.size);
+    this.Vx = new Float32Array(this.size);
+    this.Vy = new Float32Array(this.size);
+    this.Vx0 = new Float32Array(this.size);
+    this.Vy0 = new Float32Array(this.size);
