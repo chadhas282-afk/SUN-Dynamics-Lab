@@ -178,3 +178,23 @@ class FluidSolver {
         } else {
           div[this.IX(i, j)] = -0.5 * h * (u[this.IX(i + 1, j)] - u[this.IX(i - 1, j)] + v[this.IX(i, j + 1)] - v[this.IX(i, j - 1)]);
           p[this.IX(i, j)] = 0;
+           }
+      }
+    }
+    this.setBnd(0, div);
+    this.setBnd(0, p);
+    this.linSolve(0, p, div, 1, 4);
+    for (let j = 1; j <= N; j++) {
+      for (let i = 1; i <= N; i++) {
+        if (this.obstacles[this.IX(i, j)] === 0) {
+          u[this.IX(i, j)] -= 0.5 * (p[this.IX(i + 1, j)] - p[this.IX(i - 1, j)]) / h;
+          v[this.IX(i, j)] -= 0.5 * (p[this.IX(i, j + 1)] - p[this.IX(i, j - 1)]) / h;
+        }
+      }
+    }
+    this.setBnd(1, u);
+    this.setBnd(2, v);
+  }
+  public step() {
+    this.diffuse(1, this.Vx0, this.Vx, this.visc, this.dt);
+    this.diffuse(2, this.Vy0, this.Vy, this.visc, this.dt);
