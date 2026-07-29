@@ -98,3 +98,23 @@ class FluidSolver {
   public addVelocity(x: number, y: number, amountX: number, amountY: number) {
     const index = this.IX(x, y);
     this.Vx[index] += amountX;
+    this.Vy[index] += amountY;
+  }
+  private setBnd(b: number, x: Float32Array) {
+    const N = this.N;
+    for (let i = 1; i <= N; i++) {
+      x[this.IX(0, i)] = b === 1 ? -x[this.IX(1, i)] : x[this.IX(1, i)];
+      x[this.IX(N + 1, i)] = b === 1 ? -x[this.IX(N, i)] : x[this.IX(N, i)];
+      x[this.IX(i, 0)] = b === 2 ? -x[this.IX(i, 1)] : x[this.IX(i, 1)];
+      x[this.IX(i, N + 1)] = b === 2 ? -x[this.IX(i, N)] : x[this.IX(i, N)];
+    }
+    x[this.IX(0, 0)] = 0.5 * (x[this.IX(1, 0)] + x[this.IX(0, 1)]);
+    x[this.IX(0, N + 1)] = 0.5 * (x[this.IX(1, N + 1)] + x[this.IX(0, N)]);
+    x[this.IX(N + 1, 0)] = 0.5 * (x[this.IX(N, 0)] + x[this.IX(N + 1, 1)]);
+    x[this.IX(N + 1, N + 1)] = 0.5 * (x[this.IX(N, N + 1)] + x[this.IX(N + 1, N)]);
+    for (let j = 1; j <= N; j++) {
+      for (let i = 1; i <= N; i++) {
+        if (this.obstacles[this.IX(i, j)] === 1) {
+          x[this.IX(i, j)] = 0;
+        }
+      }
