@@ -118,3 +118,23 @@ class FluidSolver {
           x[this.IX(i, j)] = 0;
         }
       }
+       }
+  }
+  private linSolve(b: number, x: Float32Array, x0: Float32Array, a: number, c: number, iter: number = 20) {
+    const N = this.N;
+    const cRecip = 1.0 / c;
+    for (let k = 0; k < iter; k++) {
+      for (let j = 1; j <= N; j++) {
+        for (let i = 1; i <= N; i++) {
+          if (this.obstacles[this.IX(i, j)] === 0) {
+            x[this.IX(i, j)] = (x0[this.IX(i, j)] + a * (x[this.IX(i + 1, j)] + x[this.IX(i - 1, j)] + x[this.IX(i, j + 1)] + x[this.IX(i, j - 1)])) * cRecip;
+          }
+        }
+      }
+      this.setBnd(b, x);
+    }
+  }
+  private diffuse(b: number, x: Float32Array, x0: Float32Array, diff: number, dt: number) {
+    const a = this.dt * diff * this.N * this.N;
+    this.linSolve(b, x, x0, a, 1 + 4 * a);
+  }
