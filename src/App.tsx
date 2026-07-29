@@ -238,3 +238,23 @@ class ConvectionSolver {
     this.Vy = new Float32Array(this.size);
     this.Vx0 = new Float32Array(this.size);
     this.Vy0 = new Float32Array(this.size);
+    this.p = new Float32Array(this.size);
+    this.div = new Float32Array(this.size);
+  }
+  public IX(x: number, y: number): number {
+    x = Math.max(0, Math.min(x, this.N + 1));
+    y = Math.max(0, Math.min(y, this.N + 1));
+    return x + y * (this.N + 2);
+  }
+  public addTemperature(x: number, y: number, amount: number) {
+    this.T[this.IX(x, y)] += amount;
+  }
+  private setBnd(b: number, x: Float32Array) {
+    const N = this.N;
+    for (let i = 1; i <= N; i++) {
+      x[this.IX(0, i)] = b === 1 ? -x[this.IX(1, i)] : x[this.IX(1, i)];
+      x[this.IX(N + 1, i)] = b === 1 ? -x[this.IX(N, i)] : x[this.IX(N, i)];
+      x[this.IX(i, 0)] = b === 2 ? -x[this.IX(i, 1)] : x[this.IX(i, 1)];
+      x[this.IX(i, N + 1)] = b === 2 ? -x[this.IX(i, N)] : x[this.IX(i, N)];
+    }
+    x[this.IX(0, 0)] = 0.5 * (x[this.IX(1, 0)] + x[this.IX(0, 1)]);
