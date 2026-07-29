@@ -198,3 +198,23 @@ class FluidSolver {
   public step() {
     this.diffuse(1, this.Vx0, this.Vx, this.visc, this.dt);
     this.diffuse(2, this.Vy0, this.Vy, this.visc, this.dt);
+    this.project(this.Vx0, this.Vy0, this.p, this.div);
+    this.advect(1, this.Vx, this.Vx0, this.Vx0, this.Vy0, this.dt);
+    this.advect(2, this.Vy, this.Vy0, this.Vx0, this.Vy0, this.dt);
+    this.project(this.Vx, this.Vy, this.p, this.div);
+    this.diffuse(0, this.s, this.density, this.diff, this.dt);
+    this.advect(0, this.density, this.s, this.Vx, this.Vy, this.dt);
+    for(let i = 0; i < this.density.length; i++) {
+      this.density[i] *= 0.99;
+    }
+  }
+}
+class ConvectionSolver {
+  public N: number;
+  private size: number;
+  private dt: number;
+  private diff: number;
+  public visc: number;
+  public T: Float32Array;
+  public T0: Float32Array;
+  public Vx: Float32Array;
