@@ -358,3 +358,23 @@ class ErosionSolver {
   public water: Float32Array;
   public sediment: Float32Array;
   public Vx: Float32Array;
+  public Vy: Float32Array;
+  public rainfall: number = 0.01;
+  public erodibility: number = 0.01;
+  public deposition: number = 0.01;
+  public dt: number = 0.1;
+  public totalKineticEnergy = 0;
+  constructor(N: number) {
+    this.N = N;
+    this.size = N * N;
+    this.height = new Float32Array(this.size);
+    this.water = new Float32Array(this.size);
+    this.sediment = new Float32Array(this.size);
+    this.Vx = new Float32Array(this.size);
+    this.Vy = new Float32Array(this.size);
+  }
+  public IX(x: number, y: number): number {
+    return x + y * this.N;
+  }
+  public generateTerrain(type: 'Volcanic Peak' | 'Fault Line Valley') {
+    const noise = new Noise(Math.random());
