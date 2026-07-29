@@ -438,3 +438,23 @@ class ErosionSolver {
         const wx1 = srcX - sx0;
         const wx0 = 1 - wx1;
         const wy1 = srcY - sy0;
+        const wy0 = 1 - wy1;
+        const valW = 
+          wx0 * wy0 * this.water[this.IX(sx0, sy0)] +
+          wx1 * wy0 * this.water[this.IX(sx1, sy0)] +
+          wx0 * wy1 * this.water[this.IX(sx0, sy1)] +
+          wx1 * wy1 * this.water[this.IX(sx1, sy1)];
+        const valS = 
+          wx0 * wy0 * this.sediment[this.IX(sx0, sy0)] +
+          wx1 * wy0 * this.sediment[this.IX(sx1, sy0)] +
+          wx0 * wy1 * this.sediment[this.IX(sx0, sy1)] +
+          wx1 * wy1 * this.sediment[this.IX(sx1, sy1)];
+        newWater[i] = valW;
+        newSediment[i] = valS;
+      }
+    }
+    this.water = newWater;
+    this.sediment = newSediment;
+    for (let y = 1; y < N - 1; y++) {
+      for (let x = 1; x < N - 1; x++) {
+        const i = this.IX(x, y);
