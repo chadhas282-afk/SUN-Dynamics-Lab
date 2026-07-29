@@ -318,3 +318,23 @@ class ConvectionSolver {
     this.setBnd(0, div);
     this.setBnd(0, p);
     this.linSolve(0, p, div, 1, 4);
+    for (let j = 1; j <= N; j++) {
+      for (let i = 1; i <= N; i++) {
+        u[this.IX(i, j)] -= 0.5 * (p[this.IX(i + 1, j)] - p[this.IX(i - 1, j)]) / h;
+        v[this.IX(i, j)] -= 0.5 * (p[this.IX(i, j + 1)] - p[this.IX(i, j - 1)]) / h;
+      }
+    }
+    this.setBnd(1, u);
+    this.setBnd(2, v);
+  }
+  public step() {
+    for (let j = 1; j <= this.N; j++) {
+      for (let i = 1; i <= this.N; i++) {
+        const idx = this.IX(i, j);
+        const tempDiff = this.T[idx] - this.ambientT;
+        this.Vy[idx] -= this.beta * tempDiff * this.dt;
+        if (this.coriolisF !== 0) {
+           const u = this.Vx[idx];
+           const v = this.Vy[idx];
+           this.Vx[idx] += this.coriolisF * v * this.dt;
+           this.Vy[idx] -= this.coriolisF * u * this.dt;
