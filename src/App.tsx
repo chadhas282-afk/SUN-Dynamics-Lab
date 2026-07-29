@@ -338,3 +338,23 @@ class ConvectionSolver {
            const v = this.Vy[idx];
            this.Vx[idx] += this.coriolisF * v * this.dt;
            this.Vy[idx] -= this.coriolisF * u * this.dt;
+           }
+      }
+    }
+    this.diffuse(1, this.Vx0, this.Vx, this.visc, this.dt);
+    this.diffuse(2, this.Vy0, this.Vy, this.visc, this.dt);
+    this.project(this.Vx0, this.Vy0, this.p, this.div);
+    this.advect(1, this.Vx, this.Vx0, this.Vx0, this.Vy0, this.dt);
+    this.advect(2, this.Vy, this.Vy0, this.Vx0, this.Vy0, this.dt);
+    this.project(this.Vx, this.Vy, this.p, this.div);
+    this.diffuse(0, this.T0, this.T, this.diff, this.dt);
+    this.advect(0, this.T, this.T0, this.Vx, this.Vy, this.dt);
+  }
+}
+class ErosionSolver {
+  public N: number;
+  private size: number;
+  public height: Float32Array;
+  public water: Float32Array;
+  public sediment: Float32Array;
+  public Vx: Float32Array;
