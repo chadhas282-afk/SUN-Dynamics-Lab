@@ -378,3 +378,23 @@ class ErosionSolver {
   }
   public generateTerrain(type: 'Volcanic Peak' | 'Fault Line Valley') {
     const noise = new Noise(Math.random());
+    const cx = this.N / 2;
+    const cy = this.N / 2;
+    const maxR = this.N / 2;
+    for (let y = 0; y < this.N; y++) {
+      for (let x = 0; x < this.N; x++) {
+        let h = noise.fbm2d(x * 0.03, y * 0.03, 6, 0.5) * 0.5 + 0.5;
+        if (type === 'Volcanic Peak') {
+          const dx = x - cx;
+          const dy = y - cy;
+          const d = Math.sqrt(dx*dx + dy*dy);
+          const cone = Math.max(0, 1.0 - d / maxR);
+          h = h * 0.4 + cone * 0.8;
+          if (d < 10) h -= (10 - d) * 0.05;
+        } else {
+          const distToFault = Math.abs((x - cx) + Math.sin(y * 0.05) * 20);
+          const valley = Math.max(0, 1.0 - distToFault / 30);
+          h = h * 0.7 - valley * 0.5 + 0.2;
+        }
+        this.height[this.IX(x, y)] = Math.max(0, h);
+        this.water[this.IX(x, y)] = 0;
