@@ -78,3 +78,23 @@ class FluidSolver {
     this.diff = diffusion;
     this.visc = viscosity;
     this.s = new Float32Array(this.size);
+    this.density = new Float32Array(this.size);
+    this.Vx = new Float32Array(this.size);
+    this.Vy = new Float32Array(this.size);
+    this.Vx0 = new Float32Array(this.size);
+    this.Vy0 = new Float32Array(this.size);
+    this.p = new Float32Array(this.size);
+    this.div = new Float32Array(this.size);
+    this.obstacles = new Uint8Array(this.size);
+  }
+  public IX(x: number, y: number): number {
+    x = Math.max(0, Math.min(x, this.N + 1));
+    y = Math.max(0, Math.min(y, this.N + 1));
+    return x + y * (this.N + 2);
+  }
+  public addDensity(x: number, y: number, amount: number) {
+    this.density[this.IX(x, y)] += amount;
+  }
+  public addVelocity(x: number, y: number, amountX: number, amountY: number) {
+    const index = this.IX(x, y);
+    this.Vx[index] += amountX;
