@@ -18,7 +18,7 @@ class Noise {
   }
   private lerp(t: number, a: number, b: number) {
     return a + t * (b - a);
-    }
+  }
   private grad(hash: number, x: number, y: number) {
     const h = hash & 15;
     const u = h < 8 ? x : y;
@@ -58,3 +58,23 @@ type TerrainType = 'Volcanic Peak' | 'Fault Line Valley';
 import { Wind, ThermometerSun, Waves, Settings, Activity, BookOpen, Calculator, ArrowDownCircle, Layers, Globe, Droplets, Cpu, Orbit } from 'lucide-react';
 class FluidSolver {
   public N: number;
+  private size: number;
+  private dt: number;
+  private diff: number;
+  public visc: number;
+  public s: Float32Array;
+  public density: Float32Array;
+  public Vx: Float32Array;
+  public Vy: Float32Array;
+  public Vx0: Float32Array;
+  public Vy0: Float32Array;
+  public p: Float32Array;
+  public div: Float32Array;
+  public obstacles: Uint8Array;
+  constructor(N: number, diffusion: number, viscosity: number, dt: number) {
+    this.N = N;
+    this.size = (N + 2) * (N + 2);
+    this.dt = dt;
+    this.diff = diffusion;
+    this.visc = viscosity;
+    this.s = new Float32Array(this.size);
