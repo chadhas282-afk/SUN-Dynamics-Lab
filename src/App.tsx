@@ -498,3 +498,103 @@ class GravitySolver {
     this.py = new Float32Array(numBodies);
     this.vx = new Float32Array(numBodies);
     this.vy = new Float32Array(numBodies);
+    this.ax = new Float32Array(numBodies);
+    this.ay = new Float32Array(numBodies);
+    this.mass = new Float32Array(numBodies);
+  }
+  public initGalaxy(width: number, height: number) {
+    const cx = width / 2;
+    const cy = height / 2;
+    this.px[0] = cx;
+    this.py[0] = cy;
+    this.vx[0] = 0;
+    this.vy[0] = 0;
+    this.mass[0] = 10000;
+    for (let i = 1; i < this.numBodies; i++) {
+      const angle = Math.random() * Math.PI * 2;
+      const radius = 50 + Math.random() * (width / 2 - 100);
+      this.px[i] = cx + Math.cos(angle) * radius;
+      this.py[i] = cy + Math.sin(angle) * radius;
+      const v = Math.sqrt(this.G * this.mass[0] / radius);
+      this.vx[i] = -Math.sin(angle) * v;
+      this.vy[i] = Math.cos(angle) * v;
+      this.mass[i] = 1 + Math.random() * 5;
+    }
+  }
+  public initBinaryStar(width: number, height: number) {
+    const cx = width / 2;
+    const cy = height / 2;
+    this.px[0] = cx - 100;
+    this.py[0] = cy;
+    this.vx[0] = 0;
+    this.vy[0] = 15;
+    this.mass[0] = 5000;
+    this.px[1] = cx + 100;
+    this.py[1] = cy;
+    this.vx[1] = 0;
+    this.vy[1] = -15;
+    this.mass[1] = 5000;
+    for (let i = 2; i < this.numBodies; i++) {
+      this.px[i] = cx + (Math.random() - 0.5) * width;
+      this.py[i] = cy + (Math.random() - 0.5) * height;
+      this.vx[i] = (Math.random() - 0.5) * 20;
+      this.vy[i] = (Math.random() - 0.5) * 20;
+      this.mass[i] = 1 + Math.random() * 5;
+    }
+  }
+  public step() {
+    for (let i = 0; i < this.numBodies; i++) {
+      this.ax[i] = 0;
+      this.ay[i] = 0;
+    }
+    for (let i = 0; i < this.numBodies; i++) {
+      for (let j = i + 1; j < this.numBodies; j++) {
+        const dx = this.px[j] - this.px[i];
+        const dy = this.py[j] - this.py[i];
+        const distSq = dx * dx + dy * dy + this.softening * this.softening;
+        const dist = Math.sqrt(distSq);
+        const f = this.G / (distSq * dist);
+        const forceX = f * dx;
+        const forceY = f * dy;
+        this.ax[i] += forceX * this.mass[j];
+        this.ay[i] += forceY * this.mass[j];
+        this.ax[j] -= forceX * this.mass[i];
+        this.ay[j] -= forceY * this.mass[i];
+      }
+    }
+    this.totalKineticEnergy = 0;
+    for (let i = 0; i < this.numBodies; i++) {
+      this.vx[i] += this.ax[i] * this.dt;
+      this.vy[i] += this.ay[i] * this.dt;
+      this.px[i] += this.vx[i] * this.dt;
+      this.py[i] += this.vy[i] * this.dt;
+      this.totalKineticEnergy += 0.5 * this.mass[i] * (this.vx[i] * this.vx[i] + this.vy[i] * this.vy[i]);
+    }
+  }
+}
+function ContinuityAnimation() {
+  return (
+    <div className="w-full h-48 bg-dark-900 border border-dark-700 rounded-lg overflow-hidden relative flex items-center justify-center">
+      <svg className="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 400 200" preserveAspectRatio="none">
+        <defs>
+          <linearGradient id="pipeGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stopColor="#1e293b" />
+            <stop offset="50%" stopColor="#0f172a" />
+            <stop offset="100%" stopColor="#1e293b" />
+          </linearGradient>
+        </defs>
+        <path d="M 0 40 L 120 40 C 160 40, 180 80, 200 80 C 220 80, 240 40, 280 40 L 400 40" fill="none" stroke="#64748b" strokeWidth="4" />
+        <path d="M 0 160 L 120 160 C 160 160, 180 120, 200 120 C 220 120, 240 160, 280 160 L 400 160" fill="none" stroke="#64748b" strokeWidth="4" />
+        <path d="M 0 40 L 120 40 C 160 40, 180 80, 200 80 C 220 80, 240 40, 280 40 L 400 40 L 400 160 L 280 160 C 240 160, 220 120, 200 120 C 180 120, 160 160, 120 160 L 0 160 Z" fill="url(#pipeGrad)" opacity="0.5" />
+        <g stroke="#3b82f6" strokeWidth="2" strokeLinecap="round" className="animate-[slideRight_4s_linear_infinite]" opacity="0.6">
+          <line x1="20" y1="60" x2="60" y2="60" /> <polygon points="60,56 68,60 60,64" fill="#3b82f6" />
+          <line x1="20" y1="100" x2="60" y2="100" /> <polygon points="60,96 68,100 60,104" fill="#3b82f6" />
+          <line x1="20" y1="140" x2="60" y2="140" /> <polygon points="60,136 68,140 60,144" fill="#3b82f6" />
+        </g>
+        <g stroke="#06b6d4" strokeWidth="2" strokeLinecap="round" className="animate-[slideRightFast_1s_linear_infinite]" opacity="0.8">
+          <line x1="180" y1="100" x2="210" y2="100" /> <polygon points="210,96 218,100 210,104" fill="#06b6d4" />
+        </g>
+        <g stroke="#3b82f6" strokeWidth="2" strokeLinecap="round" className="animate-[slideRight_4s_linear_infinite]" opacity="0.6">
+          <line x1="300" y1="60" x2="340" y2="60" /> <polygon points="340,56 348,60 340,64" fill="#3b82f6" />
+          <line x1="300" y1="100" x2="340" y2="100" /> <polygon points="340,96 348,100 340,104" fill="#3b82f6" />
+          <line x1="300" y1="140" x2="340" y2="140" /> <polygon points="340,136 348,140 340,144" fill="#3b82f6" />
