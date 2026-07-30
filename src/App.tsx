@@ -1198,3 +1198,23 @@ function AerodynamicsModule({ onTelemetryUpdate, onBack }: AerodynamicsProps) {
         </button>
 
         <div>
+          <h2 className="text-sm font-bold text-white mb-1 uppercase tracking-widest">Aerodynamics</h2>
+          <p className="text-xs text-slate-400">Navier-Stokes Eulerian Grid</p>
+        </div>
+        <div className="space-y-4">
+          <div>
+            <div className="flex justify-between text-xs mb-1">
+              <label className="text-slate-300">Flow Velocity (u)</label>
+              <span className="text-neon-blue font-mono">{flowVelocity.toFixed(1)}</span>
+            </div>
+            <input 
+              type="range" min="1.0" max="10.0" step="0.5" 
+              value={flowVelocity} onChange={e => setFlowVelocity(parseFloat(e.target.value))}
+              className="w-full accent-neon-blue"
+            />
+          </div>
+          <div>
+            <div className="flex justify-between text-xs mb-1">
+              <label className="text-slate-300">Kinematic Viscosity (ν)</label>
+              <span className="text-neon-blue font-mono">{fluidViscosity.toFixed(4)}</span>
+            </div>
