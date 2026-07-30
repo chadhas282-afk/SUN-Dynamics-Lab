@@ -598,3 +598,22 @@ function ContinuityAnimation() {
           <line x1="300" y1="60" x2="340" y2="60" /> <polygon points="340,56 348,60 340,64" fill="#3b82f6" />
           <line x1="300" y1="100" x2="340" y2="100" /> <polygon points="340,96 348,100 340,104" fill="#3b82f6" />
           <line x1="300" y1="140" x2="340" y2="140" /> <polygon points="340,136 348,140 340,144" fill="#3b82f6" />
+          </svg>
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+         <div className="w-[10px] h-[10px] bg-white rounded-full absolute top-[100px] left-[50px] animate-[flowParticle_3s_linear_infinite] shadow-[0_0_10px_white]" />
+      </div>
+      <div className="absolute bottom-2 right-3 text-[10px] text-blue-400 font-mono tracking-wider">
+        A₁V₁ = A₂V₂
+      </div>
+      <style>{`
+        @keyframes slideRightFast {
+          from { transform: translateX(0px); opacity: 0; }
+          10% { opacity: 1; }
+          90% { opacity: 1; }
+          to { transform: translateX(40px); opacity: 0; }
+        }
+        @keyframes flowParticle {
+          0% { transform: translate(0px, 0px) scale(1); opacity: 0; }
+          10% { opacity: 1; }
+          40% { transform: translate(120px, 0px) scale(1); }
+          50% { transform: translate(150px, 0px) scale(0.5); }
