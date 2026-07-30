@@ -1118,3 +1118,23 @@ function AerodynamicsModule({ onTelemetryUpdate, onBack }: AerodynamicsProps) {
         const idx = i * 4;
         if (solver.obstacles[i] === 1) {
           data[idx] = 200; data[idx+1] = 200; data[idx+2] = 200; data[idx+3] = 255;
+          } else {
+          let d = solver.density[i];
+          d = Math.min(255, Math.max(0, d * 255));
+          data[idx] = d;
+          data[idx+1] = d * 0.8;
+          data[idx+2] = d * 1.5;
+          data[idx+3] = 255;
+        }
+      }
+      createImageBitmap(imgData).then(bmp => {
+        ctx.imageSmoothingEnabled = false;
+        ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+        ctx.drawImage(bmp, 0, 0, ctx.canvas.width, ctx.canvas.height);
+      });
+    } else if (mode === 'Pressure Field') {
+      let minP = 0, maxP = 0.001;
+      for (let i = 0; i < len; i++) {
+         if (solver.p[i] < minP) minP = solver.p[i];
+         if (solver.p[i] > maxP) maxP = solver.p[i];
+      }
