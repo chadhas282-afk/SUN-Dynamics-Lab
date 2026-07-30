@@ -1098,3 +1098,23 @@ function AerodynamicsModule({ onTelemetryUpdate, onBack }: AerodynamicsProps) {
                solver.obstacles[solver.IX(i, j)] = 1;
              }
           }
+           }
+      }
+    } else if (type === 'Kelvin-Helmholtz') {
+      for (let i = 1; i <= N; i++) {
+        solver.Vy[solver.IX(i, cy)] = (Math.random() - 0.5) * 10.0;
+        solver.Vy[solver.IX(i, cy + 1)] = (Math.random() - 0.5) * 10.0;
+      }
+    }
+    if (type === 'Von Kármán Street') {
+      solver.Vy[solver.IX(cx, cy + 15)] = 20.0;
+    }
+  };
+  const draw = (solver: FluidSolver, ctx: CanvasRenderingContext2D, imgData: ImageData, mode: VisualMode) => {
+    const data = imgData.data;
+    const len = solver.s.length;
+    if (mode === 'Smoke Tracers') {
+      for (let i = 0; i < len; i++) {
+        const idx = i * 4;
+        if (solver.obstacles[i] === 1) {
+          data[idx] = 200; data[idx+1] = 200; data[idx+2] = 200; data[idx+3] = 255;
