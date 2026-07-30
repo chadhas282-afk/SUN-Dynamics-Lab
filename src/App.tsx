@@ -958,3 +958,23 @@ function AerodynamicsModule({ onTelemetryUpdate, onBack }: AerodynamicsProps) {
   const SCALE = 5;
   useEffect(() => {
     const dt = 0.1;
+    const diff = 0.0001;
+    solverRef.current = new FluidSolver(N, diff, fluidViscosity, dt);
+    setupObstacle(solverRef.current, scenarioType);
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d', { alpha: false });
+    if (!ctx) return;
+    const imgData = ctx.createImageData(N + 2, N + 2);
+    const renderLoop = (time: number) => {
+      const solver = solverRef.current;
+      if (!solver) return;
+      if (scenarioType === 'Kelvin-Helmholtz') {
+        for (let j = 1; j <= N; j++) {
+          if (j < N / 2) {
+            solver.addVelocity(2, j, flowVelocity, 0);
+            if (visualMode === 'Smoke Tracers' && j % 8 === 0) solver.addDensity(2, j, 50.0);
+          } else {
+            solver.addVelocity(N - 1, j, -flowVelocity, 0);
+            if (visualMode === 'Smoke Tracers' && j % 8 === 0) solver.addDensity(N - 1, j, 50.0);
+          }
