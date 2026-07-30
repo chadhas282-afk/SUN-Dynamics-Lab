@@ -1218,3 +1218,23 @@ function AerodynamicsModule({ onTelemetryUpdate, onBack }: AerodynamicsProps) {
               <label className="text-slate-300">Kinematic Viscosity (ν)</label>
               <span className="text-neon-blue font-mono">{fluidViscosity.toFixed(4)}</span>
             </div>
+            <input 
+              type="range" min="0.000" max="0.1" step="0.001" 
+              value={fluidViscosity} onChange={e => setFluidViscosity(parseFloat(e.target.value))}
+              className="w-full accent-neon-blue"
+            />
+          </div>
+          <div>
+            <label className="text-xs text-slate-300 mb-2 block">Simulation Scenario (Ω)</label>
+            <div className="flex flex-col gap-2">
+              {['Airfoil Wing', 'Cylinder', 'Flat Plate', 'Kelvin-Helmholtz', 'Von Kármán Street'].map(type => (
+                <button 
+                  key={type}
+                  onClick={() => setOrbitalScenarioType(type as AeroScenarioType)}
+                  className={`px-3 py-2 text-xs rounded border transition-all text-left ${scenarioType === type ? 'bg-blue-500/20 border-blue-500 text-white' : 'border-dark-700 text-slate-400 hover:bg-dark-700'}`}
+                >
+                  {type}
+                </button>
+              ))}
+            </div>
+          </div>
