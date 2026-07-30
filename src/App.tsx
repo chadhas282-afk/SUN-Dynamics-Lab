@@ -637,3 +637,23 @@ function CycloneAnimation() {
          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-rose-500 font-bold text-xl z-10">
            L
          </div>
+         <svg className="absolute inset-0 w-full h-full" viewBox="0 0 200 200">
+           <path d="M 100 100 Q 120 160, 180 180" fill="none" stroke="#3b82f6" strokeWidth="3" />
+           <polygon points="120,135 130,125 130,145" fill="#3b82f6" />
+           <polygon points="150,155 160,145 160,165" fill="#3b82f6" />
+         </svg>
+         <svg className="absolute inset-0 w-full h-full" viewBox="0 0 200 200">
+           <path d="M 100 100 Q 160 80, 180 40" fill="none" stroke="#f43f5e" strokeWidth="3" />
+           <path d="M 130 90 A 10 10 0 0 0 145 80" fill="#f43f5e" />
+           <path d="M 160 65 A 10 10 0 0 0 175 55" fill="#f43f5e" />
+         </svg>
+         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 opacity-20 pointer-events-none mix-blend-screen"
+              style={{
+                background: 'radial-gradient(circle at 40% 40%, rgba(255,255,255,0.8) 0%, transparent 60%)',
+                clipPath: 'polygon(0% 0%, 100% 0%, 100% 50%, 60% 100%, 0% 100%)'
+              }}
+         />
+      </div>
+      <div className="absolute bottom-2 right-3 text-[10px] text-amber-400 font-mono tracking-wider">
+        Baroclinic Instability
+      </div>
