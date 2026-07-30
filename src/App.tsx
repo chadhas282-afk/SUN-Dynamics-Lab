@@ -1018,3 +1018,23 @@ function AerodynamicsModule({ onTelemetryUpdate, onBack }: AerodynamicsProps) {
         let ke = 0;
         let massDev = 0;
         for (let i = 0; i < solver.Vx.length; i++) {
+           if (solver.obstacles[i] === 0) {
+            const vx = solver.Vx[i];
+            const vy = solver.Vy[i];
+            ke += vx * vx + vy * vy;
+            massDev += Math.abs(solver.div[i]);
+          }
+        }
+        onTelemetryUpdate({
+          fps,
+          kineticEnergy: ke,
+          massDeviation: massDev,
+        });
+        lastTimeRef.current = time;
+        framesRef.current = 0;
+      }
+      animFrameRef.current = requestAnimationFrame(renderLoop);
+    };
+    animFrameRef.current = requestAnimationFrame(renderLoop);
+    return () => {
+      cancelAnimationFrame(animFrameRef.current);
