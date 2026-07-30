@@ -797,3 +797,23 @@ function KHInstabilityAnimation() {
           strokeWidth="2"
         />
         {[...Array(10)].map((_, i) => (
+           <g key={i} transform={`translate(${i * 100}, 50)`}>
+            <path d="M 30 0 C 60 -40, 80 20, 50 30 C 20 40, 0 0, 30 0" fill="none" stroke="#60a5fa" strokeWidth="2" className="animate-[spin_4s_linear_infinite]" style={{ transformOrigin: '50px 0px' }} />
+          </g>
+        ))}
+      </svg>
+      <div className="absolute bottom-2 right-3 text-[10px] text-blue-400 font-mono tracking-wider">
+        Ri &lt; 0.25
+      </div>
+      <style>{`
+        @keyframes slideRight {
+          from { transform: translateX(-50%); }
+          to { transform: translateX(0%); }
+        }
+        @keyframes slideLeft {
+          from { transform: translateX(0%); }
+          to { transform: translateX(-50%); }
+        }
+      `}</style>
+    </div>
+  );
