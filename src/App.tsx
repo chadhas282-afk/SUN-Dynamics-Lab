@@ -998,3 +998,23 @@ function AerodynamicsModule({ onTelemetryUpdate, onBack }: AerodynamicsProps) {
            if (brushMode === 'Inject Fluid') {
              solver.addDensity(mx, my, 200.0);
              solver.addDensity(mx+1, my, 200.0);
+             solver.addDensity(mx, my+1, 200.0);
+             solver.addDensity(mx+1, my+1, 200.0);
+             solver.addVelocity(mx, my, mousePosRef.current.vx * 2, mousePosRef.current.vy * 2);
+           } else if (brushMode === 'Draw Obstacle') {
+             solver.obstacles[solver.IX(mx, my)] = 1;
+             solver.obstacles[solver.IX(mx+1, my)] = 1;
+             solver.obstacles[solver.IX(mx, my+1)] = 1;
+             solver.obstacles[solver.IX(mx+1, my+1)] = 1;
+           }
+        }
+      }
+      solver.visc = fluidViscosity;
+      solver.step();
+      draw(solver, ctx, imgData, visualMode);
+      framesRef.current++;
+      if (time - lastTimeRef.current >= 500) {
+        const fps = (framesRef.current * 1000) / (time - lastTimeRef.current);
+        let ke = 0;
+        let massDev = 0;
+        for (let i = 0; i < solver.Vx.length; i++) {
