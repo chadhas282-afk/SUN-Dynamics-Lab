@@ -717,3 +717,23 @@ function GridResolutionAnimation() {
       </div>
       <div className="relative w-full h-full flex items-center">
         <svg className={`absolute inset-0 w-full h-full transition-opacity duration-500 ${isDiscrete ? 'opacity-20' : 'opacity-100'}`} viewBox="0 0 400 200" preserveAspectRatio="none">
+          <path d="M 0 100 Q 50 20, 100 100 T 200 100 T 300 100 T 400 100" fill="none" stroke="#a855f7" strokeWidth="4" className="animate-[slideLeft_4s_linear_infinite]" />
+        </svg>
+        <div className={`absolute inset-0 w-full h-full flex items-end transition-opacity duration-500 ${isDiscrete ? 'opacity-100' : 'opacity-0'}`}>
+          {[...Array(20)].map((_, i) => {
+            const h = 100 + Math.sin(i * 0.5) * 60;
+            return (
+               <div key={i} className="flex-1 border-r border-dark-900 bg-purple-500/80 transition-all duration-300" style={{ height: `${h}px` }} />
+            )
+          })}
+        </div>
+      </div>
+      <div className="absolute top-2 left-3 text-[10px] text-purple-400 font-mono tracking-wider bg-dark-900/80 px-2 py-1 rounded">
+        {isDiscrete ? "Finite Difference Grid (Δx)" : "Continuous Function"}
+      </div>
+      <style>{`
+        @keyframes slideLeft {
+          from { transform: translateX(0); }
+          to { transform: translateX(-100px); } /* Assuming wave period is 100px */
+        }
+      `}</style>
