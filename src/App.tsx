@@ -1178,3 +1178,23 @@ function AerodynamicsModule({ onTelemetryUpdate, onBack }: AerodynamicsProps) {
       for (let j = 1; j <= N; j+=step) {
         for (let i = 1; i <= N; i+=step) {
            if (solver.obstacles[solver.IX(i, j)] === 1) continue;
+           const vx = solver.Vx[solver.IX(i, j)];
+           const vy = solver.Vy[solver.IX(i, j)];
+           const cx = i * SCALE + SCALE/2;
+           const cy = j * SCALE + SCALE/2;
+           ctx.moveTo(cx, cy);
+           ctx.lineTo(cx + vx * 2, cy + vy * 2);
+        }
+      }
+      ctx.stroke();
+    }
+  };
+  return (
+    <div className="flex flex-col md:flex-row w-full h-full">
+      <div className="w-full h-[40vh] md:h-full md:w-64 bg-dark-800/80 p-4 border-b md:border-b-0 md:border-r border-dark-700 flex flex-col gap-4 md:gap-6 overflow-y-auto shrink-0 z-10">
+        <button onClick={onBack} className="mb-4 flex items-center gap-2 text-slate-400 hover:text-white transition-colors text-xs font-bold uppercase tracking-wider bg-dark-700/50 hover:bg-dark-700 p-2 rounded-lg border border-dark-700 hover:border-slate-500 w-full justify-center">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+          Back to Home
+        </button>
+
+        <div>
