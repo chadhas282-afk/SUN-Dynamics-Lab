@@ -657,3 +657,23 @@ function CycloneAnimation() {
       <div className="absolute bottom-2 right-3 text-[10px] text-amber-400 font-mono tracking-wider">
         Baroclinic Instability
       </div>
+      </div>
+  );
+}
+function EkmanSpiralAnimation() {
+  return (
+    <div className="w-full h-48 bg-dark-900 border border-dark-700 rounded-lg overflow-hidden relative flex items-center justify-center perspective-[1000px]">
+      <div className="relative w-64 h-32 transform-style-3d rotate-x-[60deg] rotate-z-[-30deg] animate-[spinZ_20s_linear_infinite]">
+        <div className="absolute top-0 left-0 w-full h-full border border-blue-500/20 bg-blue-500/5 translate-z-[80px]" />
+        <div className="absolute top-0 left-0 w-full h-full border border-emerald-500/30 bg-emerald-500/10 translate-z-0" />
+        {[...Array(8)].map((_, i) => {
+          const z = i * 10;
+          const length = 100 - i * 10;
+          const rotation = i * 15;
+          const opacity = 1 - (i * 0.1);
+          return (
+            <div 
+              key={i} 
+              className="absolute top-1/2 left-1/2 origin-left -translate-y-1/2 h-1 bg-amber-400 before:content-[''] before:absolute before:right-0 before:top-1/2 before:-translate-y-1/2 before:border-l-[6px] before:border-l-amber-400 before:border-y-[4px] before:border-y-transparent"
+              style={{
+                width: `${length}px`,
