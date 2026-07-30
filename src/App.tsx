@@ -697,3 +697,23 @@ function EkmanSpiralAnimation() {
         @keyframes spinZ {
           from { transform: rotateX(60deg) rotateZ(0deg); }
           to { transform: rotateX(60deg) rotateZ(360deg); }
+          }
+      `}</style>
+    </div>
+  );
+}
+function GridResolutionAnimation() {
+  const [isDiscrete, setIsDiscrete] = useState(false);
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setIsDiscrete(prev => !prev);
+    }, 2000);
+    return () => clearInterval(interval);
+  }, []);
+  return (
+    <div className="w-full h-48 bg-dark-900 border border-dark-700 rounded-lg overflow-hidden relative flex items-center justify-center">
+      <div className="absolute inset-0 opacity-20 pointer-events-none" 
+           style={{ backgroundImage: 'linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)', backgroundSize: '20px 20px' }}>
+      </div>
+      <div className="relative w-full h-full flex items-center">
+        <svg className={`absolute inset-0 w-full h-full transition-opacity duration-500 ${isDiscrete ? 'opacity-20' : 'opacity-100'}`} viewBox="0 0 400 200" preserveAspectRatio="none">
