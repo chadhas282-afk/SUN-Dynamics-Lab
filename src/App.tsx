@@ -737,3 +737,23 @@ function GridResolutionAnimation() {
           to { transform: translateX(-100px); } /* Assuming wave period is 100px */
         }
       `}</style>
+      </div>
+  );
+}
+function HadleyCellAnimation() {
+  return (
+    <div className="w-full h-48 bg-dark-900 border border-dark-700 rounded-lg overflow-hidden relative flex flex-col items-center justify-end perspective-[800px]">
+      <div className="absolute top-8 w-full border-t border-dashed border-slate-600/50" />
+      <div className="w-[150%] h-16 border-t-2 border-emerald-600/50 rounded-[50%] bg-dark-800 -mb-8 shadow-[0_-10px_30px_rgba(16,185,129,0.05)]" />
+      <div className="absolute bottom-2 left-1/2 -translate-x-1/2 text-[10px] text-amber-500 font-bold uppercase tracking-widest bg-dark-900 px-2 rounded-full border border-dark-700 z-10">
+        Equator
+      </div>
+      <div className="absolute bottom-2 left-1/4 text-[9px] text-blue-400 font-mono">-30°S</div>
+      <div className="absolute bottom-2 right-1/4 text-[9px] text-blue-400 font-mono">+30°N</div>
+      <svg className="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 400 200">
+        <defs>
+           <marker id="arrowRed" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+             <polygon points="0 0, 6 3, 0 6" fill="#f43f5e" />
+           </marker>
+           <marker id="arrowBlue" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+             <polygon points="0 0, 6 3, 0 6" fill="#3b82f6" />
