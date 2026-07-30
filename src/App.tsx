@@ -837,3 +837,23 @@ function RossbyWaveAnimation() {
           strokeDasharray="5 5"
           className="animate-[dash_2s_linear_infinite]"
         />
+        <path 
+          d="M 0 50 Q 25 90, 50 50 T 100 50 T 150 50 T 200 50" 
+          fill="none" 
+          stroke="rgba(0, 240, 255, 0.3)" 
+          strokeWidth="8" 
+        />
+      </svg>
+      <div className="absolute bottom-2 right-3 text-[10px] text-cyan-400 font-mono tracking-wider">
+        c = u - β/(k² + l²)
+      </div>
+      <style>{`
+        @keyframes slideLeft {
+          from { transform: translateX(0%); }
+          to { transform: translateX(-50%); }
+        }
+        @keyframes dash {
+          to { stroke-dashoffset: -20; }
+        }
+      `}</style>
+    </div>
