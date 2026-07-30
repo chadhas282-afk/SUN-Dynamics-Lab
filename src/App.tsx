@@ -677,3 +677,23 @@ function EkmanSpiralAnimation() {
               className="absolute top-1/2 left-1/2 origin-left -translate-y-1/2 h-1 bg-amber-400 before:content-[''] before:absolute before:right-0 before:top-1/2 before:-translate-y-1/2 before:border-l-[6px] before:border-l-amber-400 before:border-y-[4px] before:border-y-transparent"
               style={{
                 width: `${length}px`,
+                transform: `translateZ(${80 - z}px) rotateZ(${rotation}deg)`,
+                opacity: opacity
+              }}
+            />
+          );
+        })}
+        <svg className="absolute top-0 left-0 w-full h-full overflow-visible" style={{ transform: 'translateZ(0) rotateX(-90deg)', transformOrigin: 'center' }}>
+        </svg>
+      </div>
+      <div className="absolute bottom-2 right-3 text-[10px] text-amber-400 font-mono tracking-wider">
+        {"u(z) = U_g(1 - e^{-az}cos(az))"}
+      </div>
+      <style>{`
+        .transform-style-3d { transform-style: preserve-3d; }
+        .rotate-x-\\[60deg\\] { transform: rotateX(60deg) rotateZ(-30deg); }
+        .translate-z-\\[80px\\] { transform: translateZ(80px); }
+        .translate-z-0 { transform: translateZ(0px); }
+        @keyframes spinZ {
+          from { transform: rotateX(60deg) rotateZ(0deg); }
+          to { transform: rotateX(60deg) rotateZ(360deg); }
