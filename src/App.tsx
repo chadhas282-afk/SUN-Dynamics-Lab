@@ -1038,3 +1038,23 @@ function AerodynamicsModule({ onTelemetryUpdate, onBack }: AerodynamicsProps) {
     animFrameRef.current = requestAnimationFrame(renderLoop);
     return () => {
       cancelAnimationFrame(animFrameRef.current);
+      solverRef.current = null;
+    };
+  }, [scenarioType, fluidViscosity, flowVelocity, visualMode, brushMode, onTelemetryUpdate]);
+  const handlePointer = (e: React.PointerEvent<HTMLCanvasElement>, isDown?: boolean) => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const rect = canvas.getBoundingClientRect();
+    const scaleX = (N + 2) / rect.width;
+    const scaleY = (N + 2) / rect.height;
+    const x = (e.clientX - rect.left) * scaleX;
+    const y = (e.clientY - rect.top) * scaleY;
+    if (isDown !== undefined) {
+      mousePosRef.current.isDown = isDown;
+    }
+    if (mousePosRef.current.isDown) {
+       mousePosRef.current.vx = x - mousePosRef.current.x;
+       mousePosRef.current.vy = y - mousePosRef.current.y;
+    } else {
+       mousePosRef.current.vx = 0;
+       mousePosRef.current.vy = 0;
