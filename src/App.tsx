@@ -918,3 +918,23 @@ function VorticityAnimation() {
           <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-3 h-3 bg-purple-400 rounded-full shadow-[0_0_10px_#c084fc]" />
           <div className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 w-3 h-3 bg-blue-400 rounded-full shadow-[0_0_10px_#60a5fa]" />
           <div className="absolute top-1/2 left-0 -translate-x-1/2 -translate-y-1/2 w-3 h-3 bg-emerald-400 rounded-full shadow-[0_0_10px_#34d399]" />
+          <div className="absolute top-1/2 right-0 translate-x-1/2 -translate-y-1/2 w-3 h-3 bg-amber-400 rounded-full shadow-[0_0_10px_#fbbf24]" />
+        </div>
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-2 h-2 bg-white rounded-full shadow-[0_0_8px_white]" />
+        <svg className="absolute inset-0 w-full h-full animate-[spin_3s_linear_infinite]" viewBox="0 0 100 100">
+           <defs>
+             <marker id="arrowhead" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+               <polygon points="0 0, 6 3, 0 6" fill="#c084fc" />
+             </marker>
+           </defs>
+           <path d="M 50 15 A 35 35 0 0 1 85 50" fill="none" stroke="#c084fc" strokeWidth="2" strokeDasharray="4 4" markerEnd="url(#arrowhead)" />
+           <path d="M 50 85 A 35 35 0 0 1 15 50" fill="none" stroke="#c084fc" strokeWidth="2" strokeDasharray="4 4" markerEnd="url(#arrowhead)" />
+        </svg>
+      </div>
+      <div className="absolute bottom-2 right-3 text-[10px] text-purple-400 font-mono tracking-wider">
+        ζ = ∇ × v
+      </div>
+    </div>
+  );
+}
+interface AerodynamicsProps {
