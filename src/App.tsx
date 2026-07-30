@@ -757,3 +757,23 @@ function HadleyCellAnimation() {
            </marker>
            <marker id="arrowBlue" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
              <polygon points="0 0, 6 3, 0 6" fill="#3b82f6" />
+             </marker>
+           <marker id="arrowPurple" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+             <polygon points="0 0, 6 3, 0 6" fill="#a855f7" />
+           </marker>
+        </defs>
+        <path d="M 200 170 C 200 100, 200 40, 220 30" fill="none" stroke="#f43f5e" strokeWidth="2" strokeDasharray="4 4" className="animate-[dash_2s_linear_infinite]" markerEnd="url(#arrowRed)" />
+        <path d="M 220 30 C 250 20, 280 20, 300 40" fill="none" stroke="#a855f7" strokeWidth="2" strokeDasharray="4 4" className="animate-[dash_2s_linear_infinite]" markerEnd="url(#arrowPurple)" />
+        <path d="M 300 40 C 310 80, 310 130, 290 160" fill="none" stroke="#3b82f6" strokeWidth="2" strokeDasharray="4 4" className="animate-[dash_2s_linear_infinite]" markerEnd="url(#arrowBlue)" />
+        <path d="M 290 160 C 250 170, 220 170, 205 170" fill="none" stroke="#3b82f6" strokeWidth="2" strokeDasharray="4 4" className="animate-[dash_2s_linear_infinite]" markerEnd="url(#arrowBlue)" />
+        <path d="M 200 170 C 200 100, 200 40, 180 30" fill="none" stroke="#f43f5e" strokeWidth="2" strokeDasharray="4 4" className="animate-[dash_2s_linear_infinite]" markerEnd="url(#arrowRed)" />
+        <path d="M 180 30 C 150 20, 120 20, 100 40" fill="none" stroke="#a855f7" strokeWidth="2" strokeDasharray="4 4" className="animate-[dash_2s_linear_infinite]" markerEnd="url(#arrowPurple)" />
+        <path d="M 100 40 C 90 80, 90 130, 110 160" fill="none" stroke="#3b82f6" strokeWidth="2" strokeDasharray="4 4" className="animate-[dash_2s_linear_infinite]" markerEnd="url(#arrowBlue)" />
+        <path d="M 110 160 C 150 170, 180 170, 195 170" fill="none" stroke="#3b82f6" strokeWidth="2" strokeDasharray="4 4" className="animate-[dash_2s_linear_infinite]" markerEnd="url(#arrowBlue)" />
+      </svg>
+      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 w-16 h-16 bg-rose-500/20 blur-xl rounded-full" />
+      <style>{`
+        @keyframes dash {
+          to { stroke-dashoffset: -16; }
+        }
+      `}</style>
