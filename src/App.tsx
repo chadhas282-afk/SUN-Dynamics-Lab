@@ -898,3 +898,23 @@ function ThermalConvectionAnimation() {
           20% { opacity: 1; }
           80% { opacity: 1; }
           100% { transform: translateX(-50%) translateY(-180px) scale(1.5); opacity: 0; }
+          }
+      `}</style>
+    </div>
+  );
+}
+function VorticityAnimation() {
+  return (
+    <div className="w-full h-48 bg-dark-900 border border-dark-700 rounded-lg overflow-hidden relative flex items-center justify-center">
+      <div className="absolute inset-0 opacity-20 pointer-events-none">
+        {[...Array(6)].map((_, i) => (
+          <div key={i} className="absolute h-[1px] bg-gradient-to-r from-transparent via-purple-500 to-transparent w-full animate-[slideRight_4s_linear_infinite]"
+               style={{ top: `${(i + 1) * 16}%`, animationDelay: `${i * 0.5}s` }}>
+          </div>
+        ))}
+      </div>
+      <div className="relative w-24 h-24">
+        <div className="absolute inset-0 rounded-full border-2 border-purple-500/30 animate-[spin_3s_linear_infinite]">
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-3 h-3 bg-purple-400 rounded-full shadow-[0_0_10px_#c084fc]" />
+          <div className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 w-3 h-3 bg-blue-400 rounded-full shadow-[0_0_10px_#60a5fa]" />
+          <div className="absolute top-1/2 left-0 -translate-x-1/2 -translate-y-1/2 w-3 h-3 bg-emerald-400 rounded-full shadow-[0_0_10px_#34d399]" />
