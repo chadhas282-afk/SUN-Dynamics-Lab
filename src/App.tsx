@@ -1078,3 +1078,23 @@ function AerodynamicsModule({ onTelemetryUpdate, onBack }: AerodynamicsProps) {
         }
       }
     } else if (type === 'Flat Plate') {
+       const width = 4;
+      const height = 40;
+      for (let j = cy - height/2; j <= cy + height/2; j++) {
+        for (let i = cx - width/2; i <= cx + width/2; i++) {
+          if (i > 0 && i <= N && j > 0 && j <= N) {
+            solver.obstacles[solver.IX(i, j)] = 1;
+          }
+        }
+      }
+    } else if (type === 'Airfoil Wing') {
+      for (let j = 1; j <= N; j++) {
+        for (let i = 1; i <= N; i++) {
+          const dx = (i - cx) / 25;
+          const dy = (j - cy) / 8; 
+          if (dx >= -0.5 && dx <= 1.5) {
+             const yt = 0.2 * (0.2969 * Math.sqrt(Math.max(0, dx + 0.5)) - 0.1260 * (dx + 0.5) - 0.3516 * Math.pow(dx + 0.5, 2) + 0.2843 * Math.pow(dx + 0.5, 3) - 0.1015 * Math.pow(dx + 0.5, 4));
+             if (Math.abs(dy) <= yt * 5) {
+               solver.obstacles[solver.IX(i, j)] = 1;
+             }
+          }
