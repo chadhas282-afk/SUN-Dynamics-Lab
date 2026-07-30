@@ -938,3 +938,23 @@ function VorticityAnimation() {
   );
 }
 interface AerodynamicsProps {
+  onBack: () => void;
+  onTelemetryUpdate: (data: { fps: number; kineticEnergy: number; massDeviation: number }) => void;
+}
+type VisualMode = 'Velocity Vectors' | 'Pressure Field' | 'Smoke Tracers';
+function AerodynamicsModule({ onTelemetryUpdate, onBack }: AerodynamicsProps) {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const [flowVelocity, setFlowVelocity] = useState(5.0);
+  const [fluidViscosity, setFluidViscosity] = useState(0.001);
+  const [scenarioType, setOrbitalScenarioType] = useState<AeroScenarioType>('Cylinder');
+  const [visualMode, setVisualMode] = useState<VisualMode>('Smoke Tracers');
+  const [brushMode, setBrushMode] = useState<AeroBrushMode>('Inject Fluid');
+  const solverRef = useRef<FluidSolver | null>(null);
+  const animFrameRef = useRef<number>(0);
+  const lastTimeRef = useRef<number>(performance.now());
+  const framesRef = useRef<number>(0);
+  const mousePosRef = useRef<{ x: number; y: number; isDown: boolean; vx: number; vy: number }>({ x: 0, y: 0, isDown: false, vx: 0, vy: 0 });
+  const N = 128;
+  const SCALE = 5;
+  useEffect(() => {
+    const dt = 0.1;
