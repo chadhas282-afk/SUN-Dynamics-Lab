@@ -978,3 +978,23 @@ function AerodynamicsModule({ onTelemetryUpdate, onBack }: AerodynamicsProps) {
             solver.addVelocity(N - 1, j, -flowVelocity, 0);
             if (visualMode === 'Smoke Tracers' && j % 8 === 0) solver.addDensity(N - 1, j, 50.0);
           }
+          }
+      } else {
+        for (let j = 1; j <= N; j++) {
+          if (j > 10 && j < N - 10) {
+             solver.addVelocity(2, j, flowVelocity, 0);
+             if (visualMode === 'Smoke Tracers') {
+               if (j % 8 === 0) {
+                 solver.addDensity(2, j, 50.0);
+               }
+             }
+          }
+        }
+      }
+      if (mousePosRef.current.isDown) {
+        const mx = Math.floor(mousePosRef.current.x);
+        const my = Math.floor(mousePosRef.current.y);
+        if (mx > 0 && mx <= N && my > 0 && my <= N) {
+           if (brushMode === 'Inject Fluid') {
+             solver.addDensity(mx, my, 200.0);
+             solver.addDensity(mx+1, my, 200.0);
