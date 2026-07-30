@@ -617,3 +617,23 @@ function ContinuityAnimation() {
           10% { opacity: 1; }
           40% { transform: translate(120px, 0px) scale(1); }
           50% { transform: translate(150px, 0px) scale(0.5); }
+          60% { transform: translate(200px, 0px) scale(1); }
+          90% { opacity: 1; }
+          100% { transform: translate(300px, 0px) scale(1); opacity: 0; }
+        }
+      `}</style>
+    </div>
+  );
+}
+function CycloneAnimation() {
+  return (
+    <div className="w-full h-48 bg-dark-900 border border-dark-700 rounded-lg overflow-hidden relative flex items-center justify-center">
+      <div className="absolute inset-0 flex items-center justify-center opacity-10 pointer-events-none">
+         <div className="w-48 h-48 rounded-full border border-white" />
+         <div className="absolute w-32 h-32 rounded-full border border-white" />
+         <div className="absolute w-16 h-16 rounded-full border border-white" />
+      </div>
+      <div className="relative w-48 h-48 animate-[spin_10s_linear_infinite]">
+         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-rose-500 font-bold text-xl z-10">
+           L
+         </div>
