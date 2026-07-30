@@ -777,3 +777,23 @@ function HadleyCellAnimation() {
           to { stroke-dashoffset: -16; }
         }
       `}</style>
+      </div>
+  );
+}
+function KHInstabilityAnimation() {
+  return (
+    <div className="w-full h-48 bg-dark-900 border border-dark-700 rounded-lg overflow-hidden relative">
+      <div className="absolute top-0 left-0 w-full h-1/2 bg-blue-500/10 flex items-center overflow-hidden">
+         <div className="w-[200%] h-[2px] bg-gradient-to-r from-transparent via-blue-400 to-transparent animate-[slideRight_3s_linear_infinite]" />
+      </div>
+      <div className="absolute bottom-0 left-0 w-full h-1/2 bg-amber-500/10 flex items-center overflow-hidden">
+         <div className="w-[200%] h-[2px] bg-gradient-to-r from-transparent via-amber-400 to-transparent animate-[slideLeft_3s_linear_infinite]" />
+      </div>
+      <svg className="absolute top-1/2 left-0 w-[200%] h-32 -translate-y-1/2 animate-[slideLeft_4s_linear_infinite]" viewBox="0 0 1000 100" preserveAspectRatio="none">
+        <path 
+          d="M 0 50 Q 50 10, 100 50 T 200 50 T 300 50 T 400 50 T 500 50 T 600 50 T 700 50 T 800 50 T 900 50 T 1000 50" 
+          fill="none" 
+          stroke="rgba(255,255,255,0.2)" 
+          strokeWidth="2"
+        />
+        {[...Array(10)].map((_, i) => (
