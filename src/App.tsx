@@ -1138,3 +1138,23 @@ function AerodynamicsModule({ onTelemetryUpdate, onBack }: AerodynamicsProps) {
          if (solver.p[i] < minP) minP = solver.p[i];
          if (solver.p[i] > maxP) maxP = solver.p[i];
       }
+      for (let i = 0; i < len; i++) {
+        const idx = i * 4;
+        if (solver.obstacles[i] === 1) {
+          data[idx] = 100; data[idx+1] = 100; data[idx+2] = 100; data[idx+3] = 255;
+        } else {
+          const p = solver.p[i];
+          let r = 0, g = 0, b = 0;
+          if (p > 0) {
+            const norm = Math.min(1, p / maxP);
+            r = norm * 255; g = norm * 100; b = 0;
+          } else {
+            const norm = Math.min(1, p / minP);
+            r = 0; g = norm * 50; b = norm * 255;
+          }
+          data[idx] = r; data[idx+1] = g; data[idx+2] = b; data[idx+3] = 255;
+        }
+      }
+      createImageBitmap(imgData).then(bmp => {
+        ctx.imageSmoothingEnabled = false;
+        ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
