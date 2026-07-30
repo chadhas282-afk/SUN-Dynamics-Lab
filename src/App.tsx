@@ -1058,3 +1058,23 @@ function AerodynamicsModule({ onTelemetryUpdate, onBack }: AerodynamicsProps) {
     } else {
        mousePosRef.current.vx = 0;
        mousePosRef.current.vy = 0;
+       }
+    mousePosRef.current.x = x;
+    mousePosRef.current.y = y;
+  };
+  const setupObstacle = (solver: FluidSolver, type: AeroScenarioType) => {
+    solver.obstacles.fill(0);
+    const cx = Math.floor(N / 3);
+    const cy = Math.floor(N / 2);
+    if (type === 'Cylinder' || type === 'Von Kármán Street') {
+      const radius = 12;
+      for (let j = 1; j <= N; j++) {
+        for (let i = 1; i <= N; i++) {
+          const dx = i - cx;
+          const dy = j - cy;
+          if (dx * dx + dy * dy <= radius * radius) {
+            solver.obstacles[solver.IX(i, j)] = 1;
+          }
+        }
+      }
+    } else if (type === 'Flat Plate') {
