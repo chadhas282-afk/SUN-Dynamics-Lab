@@ -31,7 +31,7 @@ class Noise {
     y -= Math.floor(y);
     const u = this.fade(x), v = this.fade(y);
     const A = this.p[X] + Y, B = this.p[X + 1] + Y;
-    return this.lerp(v,
+    return this.lerp(v, 
       this.lerp(u, this.grad(this.p[A], x, y), this.grad(this.p[B], x - 1, y)),
       this.lerp(u, this.grad(this.p[A + 1], x, y - 1), this.grad(this.p[B + 1], x - 1, y - 1))
     );
@@ -41,7 +41,7 @@ class Noise {
     let frequency = 1;
     let amplitude = 1;
     let maxValue = 0;
-    for (let i = 0; i < octaves; i++) {
+    for(let i = 0; i < octaves; i++) {
       total += this.perlin2(x * frequency, y * frequency) * amplitude;
       maxValue += amplitude;
       amplitude *= persistence;
@@ -160,7 +160,7 @@ class FluidSolver {
         s0 = 1.0 - s1;
         t1 = y - j0;
         t0 = 1.0 - t1;
-        d[this.IX(i, j)] =
+        d[this.IX(i, j)] = 
           s0 * (t0 * d0[this.IX(i0, j0)] + t1 * d0[this.IX(i0, j1)]) +
           s1 * (t0 * d0[this.IX(i1, j0)] + t1 * d0[this.IX(i1, j1)]);
       }
@@ -204,7 +204,7 @@ class FluidSolver {
     this.project(this.Vx, this.Vy, this.p, this.div);
     this.diffuse(0, this.s, this.density, this.diff, this.dt);
     this.advect(0, this.density, this.s, this.Vx, this.Vy, this.dt);
-    for (let i = 0; i < this.density.length; i++) {
+    for(let i = 0; i < this.density.length; i++) {
       this.density[i] *= 0.99;
     }
   }
@@ -299,7 +299,7 @@ class ConvectionSolver {
         s0 = 1.0 - s1;
         t1 = y - j0;
         t0 = 1.0 - t1;
-        d[this.IX(i, j)] =
+        d[this.IX(i, j)] = 
           s0 * (t0 * d0[this.IX(i0, j0)] + t1 * d0[this.IX(i0, j1)]) +
           s1 * (t0 * d0[this.IX(i1, j0)] + t1 * d0[this.IX(i1, j1)]);
       }
@@ -334,10 +334,10 @@ class ConvectionSolver {
         const tempDiff = this.T[idx] - this.ambientT;
         this.Vy[idx] -= this.beta * tempDiff * this.dt;
         if (this.coriolisF !== 0) {
-          const u = this.Vx[idx];
-          const v = this.Vy[idx];
-          this.Vx[idx] += this.coriolisF * v * this.dt;
-          this.Vy[idx] -= this.coriolisF * u * this.dt;
+           const u = this.Vx[idx];
+           const v = this.Vy[idx];
+           this.Vx[idx] += this.coriolisF * v * this.dt;
+           this.Vy[idx] -= this.coriolisF * u * this.dt;
         }
       }
     }
@@ -387,7 +387,7 @@ class ErosionSolver {
         if (type === 'Volcanic Peak') {
           const dx = x - cx;
           const dy = y - cy;
-          const d = Math.sqrt(dx * dx + dy * dy);
+          const d = Math.sqrt(dx*dx + dy*dy);
           const cone = Math.max(0, 1.0 - d / maxR);
           h = h * 0.4 + cone * 0.8;
           if (d < 10) h -= (10 - d) * 0.05;
@@ -416,15 +416,15 @@ class ErosionSolver {
       for (let x = 1; x < N - 1; x++) {
         const i = this.IX(x, y);
         const h = this.height[i] + this.water[i];
-        const hL = this.height[this.IX(x - 1, y)] + this.water[this.IX(x - 1, y)];
-        const hR = this.height[this.IX(x + 1, y)] + this.water[this.IX(x + 1, y)];
-        const hT = this.height[this.IX(x, y - 1)] + this.water[this.IX(x, y - 1)];
-        const hB = this.height[this.IX(x, y + 1)] + this.water[this.IX(x, y + 1)];
+        const hL = this.height[this.IX(x-1, y)] + this.water[this.IX(x-1, y)];
+        const hR = this.height[this.IX(x+1, y)] + this.water[this.IX(x+1, y)];
+        const hT = this.height[this.IX(x, y-1)] + this.water[this.IX(x, y-1)];
+        const hB = this.height[this.IX(x, y+1)] + this.water[this.IX(x, y+1)];
         const dx = (hL - hR) * 0.5;
         const dy = (hT - hB) * 0.5;
         this.Vx[i] = (this.Vx[i] + dx * this.dt) * 0.9;
         this.Vy[i] = (this.Vy[i] + dy * this.dt) * 0.9;
-        this.totalKineticEnergy += this.Vx[i] * this.Vx[i] + this.Vy[i] * this.Vy[i];
+        this.totalKineticEnergy += this.Vx[i]*this.Vx[i] + this.Vy[i]*this.Vy[i];
         const velX = this.Vx[i];
         const velY = this.Vy[i];
         let srcX = x - velX * this.dt;
@@ -439,12 +439,12 @@ class ErosionSolver {
         const wx0 = 1 - wx1;
         const wy1 = srcY - sy0;
         const wy0 = 1 - wy1;
-        const valW =
+        const valW = 
           wx0 * wy0 * this.water[this.IX(sx0, sy0)] +
           wx1 * wy0 * this.water[this.IX(sx1, sy0)] +
           wx0 * wy1 * this.water[this.IX(sx0, sy1)] +
           wx1 * wy1 * this.water[this.IX(sx1, sy1)];
-        const valS =
+        const valS = 
           wx0 * wy0 * this.sediment[this.IX(sx0, sy0)] +
           wx1 * wy0 * this.sediment[this.IX(sx1, sy0)] +
           wx0 * wy1 * this.sediment[this.IX(sx0, sy1)] +
@@ -459,7 +459,7 @@ class ErosionSolver {
       for (let x = 1; x < N - 1; x++) {
         const i = this.IX(x, y);
         if (this.water[i] <= 0.001) continue;
-        const velSq = this.Vx[i] * this.Vx[i] + this.Vy[i] * this.Vy[i];
+        const velSq = this.Vx[i]*this.Vx[i] + this.Vy[i]*this.Vy[i];
         const capacity = Math.max(0.01, velSq) * 2.0;
         if (this.sediment[i] < capacity) {
           const amount = (capacity - this.sediment[i]) * this.erodibility * this.dt;
@@ -598,9 +598,10 @@ function ContinuityAnimation() {
           <line x1="300" y1="60" x2="340" y2="60" /> <polygon points="340,56 348,60 340,64" fill="#3b82f6" />
           <line x1="300" y1="100" x2="340" y2="100" /> <polygon points="340,96 348,100 340,104" fill="#3b82f6" />
           <line x1="300" y1="140" x2="340" y2="140" /> <polygon points="340,136 348,140 340,144" fill="#3b82f6" />
+        </g>
       </svg>
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="w-[10px] h-[10px] bg-white rounded-full absolute top-[100px] left-[50px] animate-[flowParticle_3s_linear_infinite] shadow-[0_0_10px_white]" />
+         <div className="w-[10px] h-[10px] bg-white rounded-full absolute top-[100px] left-[50px] animate-[flowParticle_3s_linear_infinite] shadow-[0_0_10px_white]" />
       </div>
       <div className="absolute bottom-2 right-3 text-[10px] text-blue-400 font-mono tracking-wider">
         A₁V₁ = A₂V₂
@@ -629,30 +630,30 @@ function CycloneAnimation() {
   return (
     <div className="w-full h-48 bg-dark-900 border border-dark-700 rounded-lg overflow-hidden relative flex items-center justify-center">
       <div className="absolute inset-0 flex items-center justify-center opacity-10 pointer-events-none">
-        <div className="w-48 h-48 rounded-full border border-white" />
-        <div className="absolute w-32 h-32 rounded-full border border-white" />
-        <div className="absolute w-16 h-16 rounded-full border border-white" />
+         <div className="w-48 h-48 rounded-full border border-white" />
+         <div className="absolute w-32 h-32 rounded-full border border-white" />
+         <div className="absolute w-16 h-16 rounded-full border border-white" />
       </div>
       <div className="relative w-48 h-48 animate-[spin_10s_linear_infinite]">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-rose-500 font-bold text-xl z-10">
-          L
-        </div>
-        <svg className="absolute inset-0 w-full h-full" viewBox="0 0 200 200">
-          <path d="M 100 100 Q 120 160, 180 180" fill="none" stroke="#3b82f6" strokeWidth="3" />
-          <polygon points="120,135 130,125 130,145" fill="#3b82f6" />
-          <polygon points="150,155 160,145 160,165" fill="#3b82f6" />
-        </svg>
-        <svg className="absolute inset-0 w-full h-full" viewBox="0 0 200 200">
-          <path d="M 100 100 Q 160 80, 180 40" fill="none" stroke="#f43f5e" strokeWidth="3" />
-          <path d="M 130 90 A 10 10 0 0 0 145 80" fill="#f43f5e" />
-          <path d="M 160 65 A 10 10 0 0 0 175 55" fill="#f43f5e" />
-        </svg>
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 opacity-20 pointer-events-none mix-blend-screen"
-          style={{
-            background: 'radial-gradient(circle at 40% 40%, rgba(255,255,255,0.8) 0%, transparent 60%)',
-            clipPath: 'polygon(0% 0%, 100% 0%, 100% 50%, 60% 100%, 0% 100%)'
-          }}
-        />
+         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-rose-500 font-bold text-xl z-10">
+           L
+         </div>
+         <svg className="absolute inset-0 w-full h-full" viewBox="0 0 200 200">
+           <path d="M 100 100 Q 120 160, 180 180" fill="none" stroke="#3b82f6" strokeWidth="3" />
+           <polygon points="120,135 130,125 130,145" fill="#3b82f6" />
+           <polygon points="150,155 160,145 160,165" fill="#3b82f6" />
+         </svg>
+         <svg className="absolute inset-0 w-full h-full" viewBox="0 0 200 200">
+           <path d="M 100 100 Q 160 80, 180 40" fill="none" stroke="#f43f5e" strokeWidth="3" />
+           <path d="M 130 90 A 10 10 0 0 0 145 80" fill="#f43f5e" />
+           <path d="M 160 65 A 10 10 0 0 0 175 55" fill="#f43f5e" />
+         </svg>
+         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 opacity-20 pointer-events-none mix-blend-screen"
+              style={{
+                background: 'radial-gradient(circle at 40% 40%, rgba(255,255,255,0.8) 0%, transparent 60%)',
+                clipPath: 'polygon(0% 0%, 100% 0%, 100% 50%, 60% 100%, 0% 100%)'
+              }}
+         />
       </div>
       <div className="absolute bottom-2 right-3 text-[10px] text-amber-400 font-mono tracking-wider">
         Baroclinic Instability
@@ -672,8 +673,8 @@ function EkmanSpiralAnimation() {
           const rotation = i * 15;
           const opacity = 1 - (i * 0.1);
           return (
-            <div
-              key={i}
+            <div 
+              key={i} 
               className="absolute top-1/2 left-1/2 origin-left -translate-y-1/2 h-1 bg-amber-400 before:content-[''] before:absolute before:right-0 before:top-1/2 before:-translate-y-1/2 before:border-l-[6px] before:border-l-amber-400 before:border-y-[4px] before:border-y-transparent"
               style={{
                 width: `${length}px`,
@@ -697,7 +698,7 @@ function EkmanSpiralAnimation() {
         @keyframes spinZ {
           from { transform: rotateX(60deg) rotateZ(0deg); }
           to { transform: rotateX(60deg) rotateZ(360deg); }
-          }
+        }
       `}</style>
     </div>
   );
@@ -712,8 +713,8 @@ function GridResolutionAnimation() {
   }, []);
   return (
     <div className="w-full h-48 bg-dark-900 border border-dark-700 rounded-lg overflow-hidden relative flex items-center justify-center">
-      <div className="absolute inset-0 opacity-20 pointer-events-none"
-        style={{ backgroundImage: 'linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)', backgroundSize: '20px 20px' }}>
+      <div className="absolute inset-0 opacity-20 pointer-events-none" 
+           style={{ backgroundImage: 'linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)', backgroundSize: '20px 20px' }}>
       </div>
       <div className="relative w-full h-full flex items-center">
         <svg className={`absolute inset-0 w-full h-full transition-opacity duration-500 ${isDiscrete ? 'opacity-20' : 'opacity-100'}`} viewBox="0 0 400 200" preserveAspectRatio="none">
@@ -723,7 +724,7 @@ function GridResolutionAnimation() {
           {[...Array(20)].map((_, i) => {
             const h = 100 + Math.sin(i * 0.5) * 60;
             return (
-              <div key={i} className="flex-1 border-r border-dark-900 bg-purple-500/80 transition-all duration-300" style={{ height: `${h}px` }} />
+               <div key={i} className="flex-1 border-r border-dark-900 bg-purple-500/80 transition-all duration-300" style={{ height: `${h}px` }} />
             )
           })}
         </div>
@@ -752,15 +753,15 @@ function HadleyCellAnimation() {
       <div className="absolute bottom-2 right-1/4 text-[9px] text-blue-400 font-mono">+30°N</div>
       <svg className="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 400 200">
         <defs>
-          <marker id="arrowRed" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
-            <polygon points="0 0, 6 3, 0 6" fill="#f43f5e" />
-          </marker>
-          <marker id="arrowBlue" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
-            <polygon points="0 0, 6 3, 0 6" fill="#3b82f6" />
-          </marker>
-          <marker id="arrowPurple" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
-            <polygon points="0 0, 6 3, 0 6" fill="#a855f7" />
-          </marker>
+           <marker id="arrowRed" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+             <polygon points="0 0, 6 3, 0 6" fill="#f43f5e" />
+           </marker>
+           <marker id="arrowBlue" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+             <polygon points="0 0, 6 3, 0 6" fill="#3b82f6" />
+           </marker>
+           <marker id="arrowPurple" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+             <polygon points="0 0, 6 3, 0 6" fill="#a855f7" />
+           </marker>
         </defs>
         <path d="M 200 170 C 200 100, 200 40, 220 30" fill="none" stroke="#f43f5e" strokeWidth="2" strokeDasharray="4 4" className="animate-[dash_2s_linear_infinite]" markerEnd="url(#arrowRed)" />
         <path d="M 220 30 C 250 20, 280 20, 300 40" fill="none" stroke="#a855f7" strokeWidth="2" strokeDasharray="4 4" className="animate-[dash_2s_linear_infinite]" markerEnd="url(#arrowPurple)" />
@@ -784,16 +785,16 @@ function KHInstabilityAnimation() {
   return (
     <div className="w-full h-48 bg-dark-900 border border-dark-700 rounded-lg overflow-hidden relative">
       <div className="absolute top-0 left-0 w-full h-1/2 bg-blue-500/10 flex items-center overflow-hidden">
-        <div className="w-[200%] h-[2px] bg-gradient-to-r from-transparent via-blue-400 to-transparent animate-[slideRight_3s_linear_infinite]" />
+         <div className="w-[200%] h-[2px] bg-gradient-to-r from-transparent via-blue-400 to-transparent animate-[slideRight_3s_linear_infinite]" />
       </div>
       <div className="absolute bottom-0 left-0 w-full h-1/2 bg-amber-500/10 flex items-center overflow-hidden">
-        <div className="w-[200%] h-[2px] bg-gradient-to-r from-transparent via-amber-400 to-transparent animate-[slideLeft_3s_linear_infinite]" />
+         <div className="w-[200%] h-[2px] bg-gradient-to-r from-transparent via-amber-400 to-transparent animate-[slideLeft_3s_linear_infinite]" />
       </div>
       <svg className="absolute top-1/2 left-0 w-[200%] h-32 -translate-y-1/2 animate-[slideLeft_4s_linear_infinite]" viewBox="0 0 1000 100" preserveAspectRatio="none">
-        <path
-          d="M 0 50 Q 50 10, 100 50 T 200 50 T 300 50 T 400 50 T 500 50 T 600 50 T 700 50 T 800 50 T 900 50 T 1000 50"
-          fill="none"
-          stroke="rgba(255,255,255,0.2)"
+        <path 
+          d="M 0 50 Q 50 10, 100 50 T 200 50 T 300 50 T 400 50 T 500 50 T 600 50 T 700 50 T 800 50 T 900 50 T 1000 50" 
+          fill="none" 
+          stroke="rgba(255,255,255,0.2)" 
           strokeWidth="2"
         />
         {[...Array(10)].map((_, i) => (
@@ -823,25 +824,25 @@ function RossbyWaveAnimation() {
     <div className="w-full h-48 bg-dark-900 border border-dark-700 rounded-lg overflow-hidden relative flex items-center justify-center">
       <div className="absolute inset-0 w-full h-full opacity-10 flex flex-col justify-between">
         {[...Array(5)].map((_, i) => (
-          <div key={i} className="w-full h-[1px] bg-white border-dashed border-b" />
+           <div key={i} className="w-full h-[1px] bg-white border-dashed border-b" />
         ))}
       </div>
       <svg className="absolute w-[200%] h-full left-0 animate-[slideLeft_6s_linear_infinite]" viewBox="0 0 200 100" preserveAspectRatio="none">
         <path d="M 0 0 L 200 0 L 200 50 Q 175 10, 150 50 T 100 50 T 50 50 T 0 50 Z" fill="rgba(96, 165, 250, 0.15)" />
         <path d="M 0 100 L 200 100 L 200 50 Q 175 10, 150 50 T 100 50 T 50 50 T 0 50 Z" fill="rgba(244, 63, 94, 0.15)" />
-        <path
-          d="M 0 50 Q 25 90, 50 50 T 100 50 T 150 50 T 200 50"
-          fill="none"
-          stroke="#00f0ff"
-          strokeWidth="3"
+        <path 
+          d="M 0 50 Q 25 90, 50 50 T 100 50 T 150 50 T 200 50" 
+          fill="none" 
+          stroke="#00f0ff" 
+          strokeWidth="3" 
           strokeDasharray="5 5"
           className="animate-[dash_2s_linear_infinite]"
         />
-        <path
-          d="M 0 50 Q 25 90, 50 50 T 100 50 T 150 50 T 200 50"
-          fill="none"
-          stroke="rgba(0, 240, 255, 0.3)"
-          strokeWidth="8"
+        <path 
+          d="M 0 50 Q 25 90, 50 50 T 100 50 T 150 50 T 200 50" 
+          fill="none" 
+          stroke="rgba(0, 240, 255, 0.3)" 
+          strokeWidth="8" 
         />
       </svg>
       <div className="absolute bottom-2 right-3 text-[10px] text-cyan-400 font-mono tracking-wider">
@@ -877,3 +878,23 @@ function ThermalConvectionAnimation() {
         <path d="M 200 180 C 200 100, 200 40, 150 40 C 100 40, 100 100, 100 180" fill="none" stroke="#f43f5e" strokeWidth="2" strokeDasharray="4 4" className="animate-[dash_2s_linear_infinite]" markerEnd="url(#arrowUp)" />
         <path d="M 100 180 C 100 200, 150 200, 200 180" fill="none" stroke="#06b6d4" strokeWidth="2" strokeDasharray="4 4" className="animate-[dash_2s_linear_infinite]" markerEnd="url(#arrowDown)" />
         <path d="M 200 180 C 200 100, 200 40, 250 40 C 300 40, 300 100, 300 180" fill="none" stroke="#f43f5e" strokeWidth="2" strokeDasharray="4 4" className="animate-[dash_2s_linear_infinite]" markerEnd="url(#arrowUp)" />
+        <path d="M 300 180 C 300 200, 250 200, 200 180" fill="none" stroke="#06b6d4" strokeWidth="2" strokeDasharray="4 4" className="animate-[dash_2s_linear_infinite]" markerEnd="url(#arrowDown)" />
+      </svg>
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+         {[...Array(4)].map((_, i) => (
+            <div key={i} className="absolute bottom-0 w-6 h-6 bg-rose-500/30 rounded-full blur-md animate-[rise_4s_ease-in-infinite]" 
+                 style={{ left: '50%', transform: 'translateX(-50%)', animationDelay: `${i * 1.5}s` }} />
+         ))}
+      </div>
+      <div className="absolute bottom-2 right-3 text-[10px] text-rose-400 font-mono tracking-wider">
+        Q = hA(T_s - T_∞)
+      </div>
+      <style>{`
+        @keyframes dash {
+          to { stroke-dashoffset: -16; }
+        }
+        @keyframes rise {
+          0% { transform: translateX(-50%) translateY(0) scale(0.5); opacity: 0; }
+          20% { opacity: 1; }
+          80% { opacity: 1; }
+          100% { transform: translateX(-50%) translateY(-180px) scale(1.5); opacity: 0; }
