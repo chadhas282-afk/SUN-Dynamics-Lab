@@ -817,3 +817,23 @@ function KHInstabilityAnimation() {
       `}</style>
     </div>
   );
+  }
+function RossbyWaveAnimation() {
+  return (
+    <div className="w-full h-48 bg-dark-900 border border-dark-700 rounded-lg overflow-hidden relative flex items-center justify-center">
+      <div className="absolute inset-0 w-full h-full opacity-10 flex flex-col justify-between">
+        {[...Array(5)].map((_, i) => (
+           <div key={i} className="w-full h-[1px] bg-white border-dashed border-b" />
+        ))}
+      </div>
+      <svg className="absolute w-[200%] h-full left-0 animate-[slideLeft_6s_linear_infinite]" viewBox="0 0 200 100" preserveAspectRatio="none">
+        <path d="M 0 0 L 200 0 L 200 50 Q 175 10, 150 50 T 100 50 T 50 50 T 0 50 Z" fill="rgba(96, 165, 250, 0.15)" />
+        <path d="M 0 100 L 200 100 L 200 50 Q 175 10, 150 50 T 100 50 T 50 50 T 0 50 Z" fill="rgba(244, 63, 94, 0.15)" />
+        <path 
+          d="M 0 50 Q 25 90, 50 50 T 100 50 T 150 50 T 200 50" 
+          fill="none" 
+          stroke="#00f0ff" 
+          strokeWidth="3" 
+          strokeDasharray="5 5"
+          className="animate-[dash_2s_linear_infinite]"
+        />
