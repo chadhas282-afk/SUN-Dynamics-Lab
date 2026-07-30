@@ -1158,3 +1158,23 @@ function AerodynamicsModule({ onTelemetryUpdate, onBack }: AerodynamicsProps) {
       createImageBitmap(imgData).then(bmp => {
         ctx.imageSmoothingEnabled = false;
         ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+        ctx.drawImage(bmp, 0, 0, ctx.canvas.width, ctx.canvas.height);
+      });
+    } else if (mode === 'Velocity Vectors') {
+      ctx.fillStyle = '#0f1115';
+      ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+      ctx.fillStyle = '#64748b';
+      for (let j = 1; j <= N; j++) {
+        for (let i = 1; i <= N; i++) {
+          if (solver.obstacles[solver.IX(i, j)] === 1) {
+             ctx.fillRect(i * SCALE, j * SCALE, SCALE, SCALE);
+          }
+        }
+      }
+      ctx.strokeStyle = '#00f0ff';
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      const step = 4;
+      for (let j = 1; j <= N; j+=step) {
+        for (let i = 1; i <= N; i+=step) {
+           if (solver.obstacles[solver.IX(i, j)] === 1) continue;
