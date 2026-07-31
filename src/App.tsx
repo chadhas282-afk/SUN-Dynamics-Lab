@@ -1278,4 +1278,23 @@ function AerodynamicsModule({ onTelemetryUpdate, onBack }: AerodynamicsProps) {
           onPointerMove={(e) => handlePointer(e)}
           onPointerUp={(e) => handlePointer(e, false)}
           onPointerLeave={(e) => handlePointer(e, false)}
-          
+          className="bg-dark-900 shadow-2xl rounded-sm max-w-[90%] max-h-[90%] object-contain border border-dark-700 cursor-crosshair touch-none"
+          style={{ imageRendering: 'pixelated' }}
+        />
+        <div className="absolute inset-0 pointer-events-none" 
+             style={{ backgroundImage: 'linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px)', backgroundSize: '40px 40px' }}>
+        </div>
+      </div>
+    </div>
+  );
+}
+interface ThermalConvectionProps {
+  onBack: () => void;
+  onTelemetryUpdate: (data: { fps: number; kineticEnergy: number; massDeviation: number }) => void;
+}
+function ThermalConvectionModule({ onTelemetryUpdate, onBack }: ThermalConvectionProps) {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const [surfaceHeating, setSurfaceHeating] = useState(100.0);
+  const [atmosphericCooling, setAtmosphericCooling] = useState(-50.0);
+  const [planetaryRotation, setPlanetaryRotation] = useState(0.5);
+  const [densityDifference, setDensityDifference] = useState(0.1);
