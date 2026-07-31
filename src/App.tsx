@@ -1558,3 +1558,33 @@ function HydraulicErosionModule({ onTelemetryUpdate, onBack }: HydraulicErosionP
                     }
                  }
               }
+              }
+        }
+      }
+      solver.step();
+      draw(solver, ctx, imgData);
+      framesRef.current++;
+      if (time - lastTimeRef.current >= 500) {
+        const fps = (framesRef.current * 1000) / (time - lastTimeRef.current);
+        let totalWater = 0;
+        for (let i = 0; i < solver.water.length; i++) {
+           totalWater += solver.water[i];
+        }
+        onTelemetryUpdate({ 
+          fps, 
+          kineticEnergy: solver.totalKineticEnergy, 
+          massDeviation: totalWater
+        });
+        lastTimeRef.current = time;
+        framesRef.current = 0;
+      }
+      animFrameRef.current = requestAnimationFrame(renderLoop);
+    };
+    animFrameRef.current = requestAnimationFrame(renderLoop);
+    return () => {
+      cancelAnimationFrame(animFrameRef.current);
+      solverRef.current = null;
+    };
+  }, [terrainType, brushMode, onTelemetryUpdate]);
+  const handlePointer = (e: React.PointerEvent<HTMLCanvasElement>, isDown?: boolean) => {
+    const canvas = canvasRef.current;
