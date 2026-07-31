@@ -1678,3 +1678,33 @@ function HydraulicErosionModule({ onTelemetryUpdate, onBack }: HydraulicErosionP
               value={rainfallIntensity} onChange={e => setRainfallIntensity(parseFloat(e.target.value))}
               className="w-full accent-blue-500"
             />
+            </div>
+          <div>
+            <div className="flex justify-between text-xs mb-1">
+              <label className="text-slate-300">Soil Erodibility (Kr)</label>
+              <span className="text-amber-600 font-mono">{soilErodibility.toFixed(3)}</span>
+            </div>
+            <input 
+              type="range" min="0.00" max="0.1" step="0.005" 
+              value={soilErodibility} onChange={e => setSoilErodibility(parseFloat(e.target.value))}
+              className="w-full accent-amber-600"
+            />
+          </div>
+          <div>
+            <div className="flex justify-between text-xs mb-1">
+              <label className="text-slate-300">Deposition Rate</label>
+              <span className="text-stone-400 font-mono">{depositionRate.toFixed(3)}</span>
+            </div>
+            <input 
+              type="range" min="0.00" max="0.1" step="0.005" 
+              value={depositionRate} onChange={e => setDepositionRate(parseFloat(e.target.value))}
+              className="w-full accent-stone-500"
+            />
+          </div>
+          <div className="mt-4 p-3 bg-dark-900 border border-dark-700 rounded-lg">
+            <label className="text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-2 block">Interactive Brush</label>
+            <p className="text-[10px] text-slate-400 mb-3 leading-relaxed">Click and drag on the canvas to instantly raise mountains or carve valleys.</p>
+            <div className="flex flex-col gap-2">
+              {['Raise Terrain', 'Lower Terrain'].map(mode => (
+                <button 
+                  key={mode}
