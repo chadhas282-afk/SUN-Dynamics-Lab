@@ -1318,3 +1318,33 @@ function ThermalConvectionModule({ onTelemetryUpdate, onBack }: ThermalConvectio
     const imgData = ctx.createImageData(N + 2, N + 2);
     const renderLoop = (time: number) => {
       const solver = solverRef.current;
+      if (!solver) return;
+      solver.beta = densityDifference;
+      solver.coriolisF = planetaryRotation;
+      for (let i = 1; i <= N; i++) {
+        solver.T[solver.IX(i, N)] = surfaceHeating;
+        solver.T[solver.IX(i, 1)] = atmosphericCooling;
+      }
+      if (Math.random() > 0.5) {
+         const rx = Math.floor(Math.random() * N) + 1;
+         solver.T[solver.IX(rx, N - 1)] = surfaceHeating * 1.5;
+      }
+      if (mousePosRef.current.isDown) {
+        const mx = Math.floor(mousePosRef.current.x);
+        const my = Math.floor(mousePosRef.current.y);
+        if (mx > 0 && mx <= N && my > 0 && my <= N) {
+          solver.T[solver.IX(mx, my)] = surfaceHeating * 5;
+          solver.T[solver.IX(mx+1, my)] = surfaceHeating * 5;
+          solver.T[solver.IX(mx, my+1)] = surfaceHeating * 5;
+          solver.T[solver.IX(mx+1, my+1)] = surfaceHeating * 5;
+        }
+      }
+      solver.step();
+      draw(solver, ctx, imgData);
+      framesRef.current++;
+      if (time - lastTimeRef.current >= 500) {
+        const fps = (framesRef.current * 1000) / (time - lastTimeRef.current);
+        let ke = 0;
+        let massDev = 0;
+        for (let i = 0; i < solver.Vx.length; i++) {
+          const vx = solver.Vx[i];
