@@ -1858,3 +1858,33 @@ function OrbitalMechanicsModule({ onTelemetryUpdate, onBack }: OrbitalMechanicsP
                 <button 
                   key={type}
                   onClick={() => setScenario(type)}
+                  className={`px-3 py-2 text-xs rounded border transition-all ${scenario === type ? 'bg-purple-500/20 border-purple-500 text-white' : 'border-dark-700 text-slate-400 hover:bg-dark-700'}`}
+                >
+                  {type}
+                </button>
+              ))}
+            </div>
+          </div>
+          <div>
+            <div className="flex justify-between text-xs mb-1">
+              <label className="text-slate-300">Body Count (N)</label>
+              <span className="text-indigo-400 font-mono">{numBodies}</span>
+            </div>
+            <input 
+              type="range" min="100" max="3000" step="100" 
+              value={numBodies} onChange={e => setNumBodies(parseInt(e.target.value))}
+              className="w-full accent-indigo-500"
+            />
+            <p className="text-[10px] text-slate-500 mt-1">O(N²) complexity. Lower for better FPS.</p>
+          </div>
+          <div>
+            <div className="flex justify-between text-xs mb-1">
+              <label className="text-slate-300">Gravity Constant (G)</label>
+              <span className="text-rose-400 font-mono">{gravitationalConstant.toFixed(2)}</span>
+            </div>
+            <input 
+              type="range" min="0.1" max="5.0" step="0.1" 
+              value={gravitationalConstant} onChange={e => setGravitationalConstant(parseFloat(e.target.value))}
+              className="w-full accent-rose-500"
+            />
+          </div>
