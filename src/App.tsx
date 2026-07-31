@@ -1398,3 +1398,33 @@ function ThermalConvectionModule({ onTelemetryUpdate, onBack }: ThermalConvectio
         data[idx+1] = norm * 200;
         data[idx+2] = norm * 255;
       }
+       data[idx+3] = 255;
+    }
+    createImageBitmap(imgData).then(bmp => {
+      ctx.imageSmoothingEnabled = false;
+      ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+      ctx.drawImage(bmp, 0, 0, ctx.canvas.width, ctx.canvas.height);
+    });
+  };
+  return (
+    <div className="flex flex-col md:flex-row w-full h-full">
+      <div className="w-full h-[40vh] md:h-full md:w-64 bg-dark-800/80 p-4 border-b md:border-b-0 md:border-r border-dark-700 flex flex-col gap-4 md:gap-6 overflow-y-auto shrink-0 z-10">
+        <button onClick={onBack} className="mb-4 flex items-center gap-2 text-slate-400 hover:text-white transition-colors text-xs font-bold uppercase tracking-wider bg-dark-700/50 hover:bg-dark-700 p-2 rounded-lg border border-dark-700 hover:border-slate-500 w-full justify-center">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+          Back to Home
+        </button>
+
+        <div>
+          <h2 className="text-sm font-bold text-white mb-1 uppercase tracking-widest">Thermal Convection</h2>
+          <p className="text-xs text-slate-400">Boussinesq & Coriolis Equations</p>
+        </div>
+        <div className="space-y-4">
+          <div className="mb-6 p-3 bg-dark-900 border border-dark-700 rounded-lg">
+            <label className="text-xs text-slate-400 mb-2 block uppercase tracking-wider font-bold">Phenomenon Presets</label>
+            <div className="flex flex-col gap-2">
+              <button 
+                onClick={() => {
+                  setSurfaceHeating(150); setAtmosphericCooling(-150); setPlanetaryRotation(0); setDensityDifference(0.2);
+                }}
+                className="px-3 py-2 text-xs rounded border border-dark-700 text-slate-300 hover:bg-dark-700 text-left transition-all"
+              >
