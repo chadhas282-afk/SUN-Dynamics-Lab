@@ -1258,3 +1258,23 @@ function AerodynamicsModule({ onTelemetryUpdate, onBack }: AerodynamicsProps) {
             <div className="flex flex-col gap-2">
               {['Inject Fluid', 'Draw Obstacle'].map(mode => (
                 <button 
+                key={mode}
+                  onClick={() => setBrushMode(mode as AeroBrushMode)}
+                  className={`px-3 py-2 text-xs rounded border transition-all ${brushMode === mode ? 'bg-emerald-500/20 border-emerald-500 text-white' : 'border-dark-700 text-slate-400 hover:bg-dark-700'}`}
+                >
+                  {mode}
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className="flex-1 flex items-center justify-center bg-black overflow-hidden relative">
+        <canvas 
+          ref={canvasRef}
+          width={(N + 2) * SCALE} 
+          height={(N + 2) * SCALE}
+          onPointerDown={(e) => handlePointer(e, true)}
+          onPointerMove={(e) => handlePointer(e)}
+          onPointerUp={(e) => handlePointer(e, false)}
+          onPointerLeave={(e) => handlePointer(e, false)}
