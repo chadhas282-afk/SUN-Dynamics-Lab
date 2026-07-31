@@ -1648,3 +1648,33 @@ function HydraulicErosionModule({ onTelemetryUpdate, onBack }: HydraulicErosionP
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m15 18-6-6 6-6"/></svg>
           Back to Home
         </button>
+
+        <div>
+          <h2 className="text-sm font-bold text-white mb-1 uppercase tracking-widest">Hydraulic Erosion</h2>
+          <p className="text-xs text-slate-400">Saint-Venant Flows & Sediment</p>
+        </div>
+        <div className="space-y-4">
+          <div>
+            <label className="text-xs text-slate-300 mb-2 block">Terrain Generator</label>
+            <div className="flex flex-col gap-2">
+              {(['Volcanic Peak', 'Fault Line Valley'] as TerrainType[]).map(type => (
+                <button 
+                  key={type}
+                  onClick={() => setTerrainType(type)}
+                  className={`px-3 py-2 text-xs rounded border transition-all ${terrainType === type ? 'bg-emerald-500/20 border-emerald-500 text-white' : 'border-dark-700 text-slate-400 hover:bg-dark-700'}`}
+                >
+                  {type}
+                </button>
+              ))}
+            </div>
+          </div>
+          <div>
+            <div className="flex justify-between text-xs mb-1">
+              <label className="text-slate-300">Rainfall Intensity</label>
+              <span className="text-blue-400 font-mono">{rainfallIntensity.toFixed(3)}</span>
+            </div>
+            <input 
+              type="range" min="0.00" max="0.05" step="0.001" 
+              value={rainfallIntensity} onChange={e => setRainfallIntensity(parseFloat(e.target.value))}
+              className="w-full accent-blue-500"
+            />
