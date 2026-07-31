@@ -1918,3 +1918,33 @@ const CONCEPTS = [
     category: "Fundamental Equations & Approximations",
     icon: <Calculator className="w-5 h-5 text-blue-400" />,
     items: [
+      { name: "Continuity Equation (Conservation of Mass)", desc: "The mathematical expression of the conservation of mass in a fluid system.", eq: "∂ρ/∂t + ∇·(ρu) = 0", animation: <ContinuityAnimation /> }
+    ]
+  },
+  {
+    category: "Vorticity & Kinematics",
+    icon: <ArrowDownCircle className="w-5 h-5 text-purple-400" />,
+    items: [
+      { name: "Relative Vorticity", desc: "The macroscopic rotation of the fluid relative to the Earth.", eq: "ζ = ∇ × v = ∂v/∂x - ∂u/∂y", animation: <VorticityAnimation /> }
+    ]
+  },
+  {
+    category: "Waves & Fluid Instabilities",
+    icon: <Waves className="w-5 h-5 text-cyan-400" />,
+    items: [
+      { name: "Rossby Waves (Planetary Waves)", desc: "Giant planetary waves associated with the polar front and jet stream.", eq: "c = u - β/(k² + l²)", animation: <RossbyWaveAnimation /> },
+      { name: "Kelvin-Helmholtz Instability", desc: "Occurs when there is velocity shear in a continuous fluid or a velocity difference across the interface between two fluids.", eq: "Ri < 0.25", animation: <KHInstabilityAnimation /> }
+    ]
+  },
+  {
+    category: "Boundary Layer Dynamics & Turbulence",
+    icon: <Layers className="w-5 h-5 text-orange-400" />,
+    items: [
+      { name: "Ekman Spiral and Ekman Layer", desc: "A structure of currents or winds near a horizontal boundary in which the flow direction rotates as one moves away from the boundary.", eq: "u(z) = U_g(1 - e^{-az}cos(az))", animation: <EkmanSpiralAnimation /> }
+    ]
+  },
+  {
+    category: "Thermodynamics & Moisture Dynamics",
+    icon: <Droplets className="w-5 h-5 text-teal-400" />,
+    items: [
+      { name: "Convection", desc: "The transfer of heat by the bulk movement of a fluid, typically vertically driven by buoyancy.", eq: "Q = hA(T_s - T_∞)", animation: <ThermalConvectionAnimation /> }
