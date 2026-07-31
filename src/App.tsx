@@ -1708,3 +1708,33 @@ function HydraulicErosionModule({ onTelemetryUpdate, onBack }: HydraulicErosionP
               {['Raise Terrain', 'Lower Terrain'].map(mode => (
                 <button 
                   key={mode}
+                  onClick={() => setBrushMode(mode as ErosionBrushMode)}
+                  className={`px-3 py-2 text-xs rounded border transition-all ${brushMode === mode ? 'bg-amber-500/20 border-amber-500 text-white' : 'border-dark-700 text-slate-400 hover:bg-dark-700'}`}
+                >
+                  {mode}
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className="flex-1 flex items-center justify-center bg-black overflow-hidden relative">
+        <canvas 
+          ref={canvasRef}
+          width={N * SCALE} 
+          height={N * SCALE}
+          onPointerDown={(e) => handlePointer(e, true)}
+          onPointerMove={(e) => handlePointer(e)}
+          onPointerUp={(e) => handlePointer(e, false)}
+          onPointerLeave={(e) => handlePointer(e, false)}
+          className="bg-dark-900 shadow-2xl rounded-sm max-w-[90%] max-h-[90%] object-contain border border-dark-700 cursor-crosshair touch-none"
+          style={{ imageRendering: 'pixelated' }}
+        />
+        <div className="absolute bottom-6 right-6 opacity-20 pointer-events-none text-white text-xs font-mono flex flex-col items-center">
+           <div>N</div>
+           <div className="flex gap-4"><span>W</span><span>E</span></div>
+           <div>S</div>
+        </div>
+      </div>
+    </div>
+  );
