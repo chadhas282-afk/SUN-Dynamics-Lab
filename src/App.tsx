@@ -1828,3 +1828,33 @@ function OrbitalMechanicsModule({ onTelemetryUpdate, onBack }: OrbitalMechanicsP
           tCtx.fillStyle = '#60a5fa';
         } else if (vSq > 100) {
           tCtx.fillStyle = '#fbbf24';
+          } else {
+          tCtx.fillStyle = '#f43f5e';
+        }
+        tCtx.shadowBlur = 0;
+      }
+      tCtx.fill();
+    }
+    ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+    ctx.drawImage(tCtx.canvas, 0, 0);
+  };
+  return (
+    <div className="flex flex-col md:flex-row w-full h-full">
+      <div className="w-full h-[40vh] md:h-full md:w-64 bg-dark-800/80 p-4 border-b md:border-b-0 md:border-r border-dark-700 flex flex-col gap-4 md:gap-6 overflow-y-auto shrink-0 z-10">
+        <button onClick={onBack} className="mb-4 flex items-center gap-2 text-slate-400 hover:text-white transition-colors text-xs font-bold uppercase tracking-wider bg-dark-700/50 hover:bg-dark-700 p-2 rounded-lg border border-dark-700 hover:border-slate-500 w-full justify-center">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+          Back to Home
+        </button>
+
+        <div>
+          <h2 className="text-sm font-bold text-white mb-1 uppercase tracking-widest">Orbital Mechanics</h2>
+          <p className="text-xs text-slate-400">N-Body Gravitational Solver</p>
+        </div>
+        <div className="space-y-4">
+          <div>
+            <label className="text-xs text-slate-300 mb-2 block">Initial Condition</label>
+            <div className="flex flex-col gap-2">
+              {(['Galaxy', 'Binary Star'] as OrbitalScenarioType[]).map(type => (
+                <button 
+                  key={type}
+                  onClick={() => setScenario(type)}
