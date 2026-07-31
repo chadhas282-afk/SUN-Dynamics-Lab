@@ -1588,3 +1588,33 @@ function HydraulicErosionModule({ onTelemetryUpdate, onBack }: HydraulicErosionP
   }, [terrainType, brushMode, onTelemetryUpdate]);
   const handlePointer = (e: React.PointerEvent<HTMLCanvasElement>, isDown?: boolean) => {
     const canvas = canvasRef.current;
+    if (!canvas) return;
+    const rect = canvas.getBoundingClientRect();
+    const scaleX = N / rect.width;
+    const scaleY = N / rect.height;
+    const x = (e.clientX - rect.left) * scaleX;
+    const y = (e.clientY - rect.top) * scaleY;
+    if (isDown !== undefined) {
+      mousePosRef.current.isDown = isDown;
+    }
+    mousePosRef.current.x = x;
+    mousePosRef.current.y = y;
+  };
+  useEffect(() => {
+    if (solverRef.current) {
+      solverRef.current.rainfall = rainfallIntensity;
+      solverRef.current.erodibility = soilErodibility;
+      solverRef.current.deposition = depositionRate;
+    }
+  }, [rainfallIntensity, soilErodibility, depositionRate]);
+  const draw = (solver: ErosionSolver, ctx: CanvasRenderingContext2D, imgData: ImageData) => {
+    const data = imgData.data;
+    const len = solver.height.length;
+    for (let i = 0; i < len; i++) {
+      const h = solver.height[i];
+      const w = solver.water[i];
+      const idx = i * 4;
+      let r, g, b;
+      if (h < 0.2) {
+        r = 194; g = 178; b = 128;
+      } else if (h < 0.6) {
