@@ -1768,3 +1768,33 @@ function OrbitalMechanicsModule({ onTelemetryUpdate, onBack }: OrbitalMechanicsP
       tCanvas.width = width;
       tCanvas.height = height;
       trailsRef.current = tCanvas;
+      }
+    const tCtx = trailsRef.current.getContext('2d');
+    if (tCtx) {
+      tCtx.fillStyle = 'black';
+      tCtx.fillRect(0, 0, width, height);
+    }
+    solverRef.current = new GravitySolver(numBodies, gravitationalConstant, timeStep);
+    if (scenario === 'Galaxy') {
+       solverRef.current.initGalaxy(width, height);
+    } else {
+       solverRef.current.initBinaryStar(width, height);
+    }
+    const renderLoop = (time: number) => {
+      const solver = solverRef.current;
+      if (!solver) return;
+      solver.G = gravitationalConstant;
+      solver.dt = timeStep;
+      for (let i = 0; i < 5; i++) {
+         solver.step();
+      }
+      draw(solver, ctx, tCtx!);
+      framesRef.current++;
+      if (time - lastTimeRef.current >= 500) {
+        const fps = (framesRef.current * 1000) / (time - lastTimeRef.current);
+        onTelemetryUpdate({ 
+          fps, 
+          kineticEnergy: solver.totalKineticEnergy, 
+          massDeviation: 0
+        });
+        lastTimeRef.current = time;
