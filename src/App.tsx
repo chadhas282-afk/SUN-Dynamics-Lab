@@ -1978,3 +1978,33 @@ function MiniSimulationsGallery({ onBack }: { onBack: () => void }) {
            <div className="p-3 bg-amber-500/10 rounded-2xl border border-amber-500/20">
              <Layers className="w-8 h-8 text-amber-400" />
            </div>
+           <div>
+             <h1 className="text-3xl font-bold text-white tracking-wide">Mini-Simulations Gallery</h1>
+             <p className="text-slate-400 text-sm mt-2 max-w-3xl">
+               A collection of stylized, high-performance CSS and SVG animations illustrating key theoretical concepts in atmospheric physics and numerical weather prediction.
+             </p>
+           </div>
+        </div>
+        <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8 mb-24">
+          {CONCEPTS.map((cat, catIdx) => (
+             <React.Fragment key={catIdx}>
+               {cat.items.map((item, itemIdx) => (
+                 <div key={`${catIdx}-${itemIdx}`} className="bg-dark-800/80 backdrop-blur-md rounded-2xl border border-dark-700 p-6 shadow-2xl flex flex-col hover:border-amber-500/30 transition-colors">
+                   <div className="flex items-center gap-3 mb-4">
+                     {cat.icon}
+                     <div className="text-[10px] font-bold uppercase tracking-wider text-slate-500">{cat.category}</div>
+                   </div>
+                   <h3 className="text-lg font-bold text-amber-400 mb-2">{item.name}</h3>
+                   <p className="text-slate-300 text-xs leading-relaxed mb-6 flex-1">{item.desc}</p>
+                   <div className="w-full bg-dark-900 rounded-xl mb-6 flex items-center justify-center p-2 border border-dark-700 shadow-inner overflow-hidden">
+                     <div className="w-full h-48 relative max-w-sm">
+                       {item.animation}
+                     </div>
+                   </div>
+                   <div className="bg-dark-900 rounded-lg p-3 border border-dark-700 flex items-center justify-between mt-auto">
+                     <span className="text-[10px] text-slate-500 uppercase font-bold tracking-wider">Math / Equation</span>
+                     <code className="text-neon-blue font-mono text-xs">{item.eq}</code>
+                   </div>
+                 </div>
+               ))}
+             </React.Fragment>
