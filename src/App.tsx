@@ -1278,3 +1278,4 @@ function AerodynamicsModule({ onTelemetryUpdate, onBack }: AerodynamicsProps) {
           onPointerMove={(e) => handlePointer(e)}
           onPointerUp={(e) => handlePointer(e, false)}
           onPointerLeave={(e) => handlePointer(e, false)}
+          
