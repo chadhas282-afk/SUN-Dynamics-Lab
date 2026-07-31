@@ -1798,3 +1798,33 @@ function OrbitalMechanicsModule({ onTelemetryUpdate, onBack }: OrbitalMechanicsP
           massDeviation: 0
         });
         lastTimeRef.current = time;
+        framesRef.current = 0;
+      }
+      animFrameRef.current = requestAnimationFrame(renderLoop);
+    };
+    animFrameRef.current = requestAnimationFrame(renderLoop);
+    return () => {
+      cancelAnimationFrame(animFrameRef.current);
+      solverRef.current = null;
+    };
+  }, [scenario, numBodies, onTelemetryUpdate]);
+  const draw = (solver: GravitySolver, ctx: CanvasRenderingContext2D, tCtx: CanvasRenderingContext2D) => {
+    tCtx.fillStyle = 'rgba(0, 0, 0, 0.1)';
+    tCtx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+    for (let i = 0; i < solver.numBodies; i++) {
+      const x = solver.px[i];
+      const y = solver.py[i];
+      const m = solver.mass[i];
+      tCtx.beginPath();
+      if (m > 1000) {
+        tCtx.arc(x, y, Math.sqrt(m) * 0.1, 0, Math.PI * 2);
+        tCtx.fillStyle = 'white';
+        tCtx.shadowBlur = 20;
+        tCtx.shadowColor = 'white';
+      } else {
+        tCtx.arc(x, y, 1, 0, Math.PI * 2);
+        const vSq = solver.vx[i] * solver.vx[i] + solver.vy[i] * solver.vy[i];
+        if (vSq > 500) {
+          tCtx.fillStyle = '#60a5fa';
+        } else if (vSq > 100) {
+          tCtx.fillStyle = '#fbbf24';
