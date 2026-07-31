@@ -1428,3 +1428,33 @@ function ThermalConvectionModule({ onTelemetryUpdate, onBack }: ThermalConvectio
                 }}
                 className="px-3 py-2 text-xs rounded border border-dark-700 text-slate-300 hover:bg-dark-700 text-left transition-all"
               >
+                Rayleigh-Bénard Convection
+              </button>
+              <button 
+                onClick={() => {
+                  setSurfaceHeating(200); setAtmosphericCooling(-50); setPlanetaryRotation(1.5); setDensityDifference(0.15);
+                }}
+                className="px-3 py-2 text-xs rounded border border-dark-700 text-slate-300 hover:bg-dark-700 text-left transition-all"
+              >
+                Coriolis Cyclogenesis
+              </button>
+            </div>
+          </div>
+          <div>
+            <div className="flex justify-between text-xs mb-1">
+              <label className="text-slate-300">Surface Heating (+T)</label>
+              <span className="text-rose-400 font-mono">{surfaceHeating.toFixed(0)}</span>
+            </div>
+            <input 
+              type="range" min="0" max="300" step="10" 
+              value={surfaceHeating} onChange={e => setSurfaceHeating(parseFloat(e.target.value))}
+              className="w-full accent-rose-500"
+            />
+          </div>
+          <div>
+            <div className="flex justify-between text-xs mb-1">
+              <label className="text-slate-300">Atmospheric Cooling (-T)</label>
+              <span className="text-cyan-400 font-mono">{atmosphericCooling.toFixed(0)}</span>
+            </div>
+            <input 
+              type="range" min="-300" max="0" step="10" 
