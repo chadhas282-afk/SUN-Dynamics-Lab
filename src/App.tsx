@@ -1478,3 +1478,23 @@ function ThermalConvectionModule({ onTelemetryUpdate, onBack }: ThermalConvectio
               <label className="text-slate-300">Planetary Rotation (f)</label>
               <span className="text-purple-400 font-mono">{planetaryRotation.toFixed(2)}</span>
             </div>
+            <input 
+              type="range" min="-2.0" max="2.0" step="0.1" 
+              value={planetaryRotation} onChange={e => setPlanetaryRotation(parseFloat(e.target.value))}
+              className="w-full accent-purple-500"
+            />
+          </div>
+          <div className="mt-4 p-3 bg-dark-900 border border-dark-700 rounded-lg">
+            <label className="text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-2 block">Interactive Brush</label>
+            <p className="text-[10px] text-slate-400 leading-relaxed">Click and drag on the canvas to inject extreme heat ("Thermal Bombs") and disturb the convection cells.</p>
+          </div>
+        </div>
+      </div>
+      <div className="flex-1 flex items-center justify-center bg-black overflow-hidden relative">
+        <canvas 
+          ref={canvasRef}
+          width={(N + 2) * SCALE} 
+          height={(N + 2) * SCALE}
+          onPointerDown={(e) => handlePointer(e, true)}
+          onPointerMove={(e) => handlePointer(e)}
+          onPointerUp={(e) => handlePointer(e, false)}
