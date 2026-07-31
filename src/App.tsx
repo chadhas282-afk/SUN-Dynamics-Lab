@@ -1238,3 +1238,23 @@ function AerodynamicsModule({ onTelemetryUpdate, onBack }: AerodynamicsProps) {
               ))}
             </div>
           </div>
+          <div>
+            <label className="text-xs text-slate-300 mb-2 block">Rendering Fragment</label>
+            <div className="flex flex-col gap-2">
+              {['Velocity Vectors', 'Pressure Field', 'Smoke Tracers'].map(mode => (
+                <button 
+                  key={mode}
+                  onClick={() => setVisualMode(mode as VisualMode)}
+                  className={`px-3 py-2 text-xs rounded border transition-all ${visualMode === mode ? 'bg-purple-500/20 border-purple-500 text-white' : 'border-dark-700 text-slate-400 hover:bg-dark-700'}`}
+                >
+                  {mode}
+                </button>
+              ))}
+            </div>
+          </div>
+          <div className="mt-4 p-3 bg-dark-900 border border-dark-700 rounded-lg">
+            <label className="text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-2 block">Interactive Brush</label>
+            <p className="text-[10px] text-slate-400 mb-3 leading-relaxed">Click and drag on the canvas to interact with the simulation in real-time.</p>
+            <div className="flex flex-col gap-2">
+              {['Inject Fluid', 'Draw Obstacle'].map(mode => (
+                <button 
