@@ -1498,3 +1498,33 @@ function ThermalConvectionModule({ onTelemetryUpdate, onBack }: ThermalConvectio
           onPointerDown={(e) => handlePointer(e, true)}
           onPointerMove={(e) => handlePointer(e)}
           onPointerUp={(e) => handlePointer(e, false)}
+          onPointerLeave={(e) => handlePointer(e, false)}
+          className="bg-dark-900 shadow-2xl rounded-sm max-w-[90%] max-h-[90%] object-contain border border-dark-700 cursor-crosshair touch-none"
+          style={{ imageRendering: 'pixelated' }}
+        />
+        <div className="absolute inset-0 pointer-events-none mix-blend-overlay"
+             style={{ background: 'linear-gradient(to bottom, rgba(0, 255, 255, 0.05), rgba(255, 0, 0, 0.05))' }}>
+        </div>
+      </div>
+    </div>
+  );
+}
+interface HydraulicErosionProps {
+  onBack: () => void;
+  onTelemetryUpdate: (data: { fps: number; kineticEnergy: number; massDeviation: number }) => void;
+}
+function HydraulicErosionModule({ onTelemetryUpdate, onBack }: HydraulicErosionProps) {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const [rainfallIntensity, setRainfallIntensity] = useState(0.01);
+  const [soilErodibility, setSoilErodibility] = useState(0.02);
+  const [depositionRate, setDepositionRate] = useState(0.01);
+  const [terrainType, setTerrainType] = useState<TerrainType>('Volcanic Peak');
+  const [brushMode, setBrushMode] = useState<ErosionBrushMode>('Raise Terrain');
+  const solverRef = useRef<ErosionSolver | null>(null);
+  const animFrameRef = useRef<number>(0);
+  const lastTimeRef = useRef<number>(performance.now());
+  const framesRef = useRef<number>(0);
+  const mousePosRef = useRef<{ x: number; y: number; isDown: boolean }>({ x: 0, y: 0, isDown: false });
+  const N = 128;
+  const SCALE = 5;
+  useEffect(() => {
