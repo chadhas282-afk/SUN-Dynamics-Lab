@@ -1378,3 +1378,23 @@ function ThermalConvectionModule({ onTelemetryUpdate, onBack }: ThermalConvectio
     mousePosRef.current.x = x;
     mousePosRef.current.y = y;
   };
+  const draw = (solver: ConvectionSolver, ctx: CanvasRenderingContext2D, imgData: ImageData) => {
+    const data = imgData.data;
+    const len = solver.T.length;
+    let minT = atmosphericCooling;
+    let maxT = surfaceHeating;
+    if (minT === maxT) maxT += 1;
+    for (let i = 0; i < len; i++) {
+      const t = solver.T[i];
+      const idx = i * 4;
+      if (t >= 0) {
+        const norm = Math.min(1, t / maxT);
+        data[idx] = norm * 255;
+        data[idx+1] = norm * 80;
+        data[idx+2] = norm * 80;
+      } else {
+        const norm = Math.min(1, t / minT);
+        data[idx] = 0;
+        data[idx+1] = norm * 200;
+        data[idx+2] = norm * 255;
+      }
