@@ -1948,3 +1948,33 @@ const CONCEPTS = [
     icon: <Droplets className="w-5 h-5 text-teal-400" />,
     items: [
       { name: "Convection", desc: "The transfer of heat by the bulk movement of a fluid, typically vertically driven by buoyancy.", eq: "Q = hA(T_s - T_∞)", animation: <ThermalConvectionAnimation /> }
+      ]
+  },
+  {
+    category: "Global & Synoptic-Scale Systems",
+    icon: <Globe className="w-5 h-5 text-amber-400" />,
+    items: [
+      { name: "Hadley, Ferrel, and Polar Circulation Cells", desc: "Global-scale atmospheric circulation features driving dominant wind patterns.", eq: "Meridional Circulation", animation: <HadleyCellAnimation /> },
+      { name: "Mid-Latitude Cyclones", desc: "Large traveling atmospheric cyclonic storms with centers of low atmospheric pressure.", eq: "Baroclinic energy conversion", animation: <CycloneAnimation /> }
+    ]
+  },
+  {
+    category: "Numerical Modeling Concepts",
+    icon: <Cpu className="w-5 h-5 text-pink-400" />,
+    items: [
+      { name: "Grid Resolution (Spectral vs. Finite Difference)", desc: "Different mathematical techniques for discretizing the equations of motion across a globe or regional domain.", eq: "Δx, Δy, Δz", animation: <GridResolutionAnimation /> }
+    ]
+  }
+];
+function MiniSimulationsGallery({ onBack }: { onBack: () => void }) {
+  return (
+    <div className="flex-1 w-full h-full bg-dark-900 overflow-y-auto custom-scrollbar relative">
+      <div className="max-w-7xl mx-auto px-8 py-8">
+        <button onClick={onBack} className="mb-6 flex items-center gap-2 text-slate-400 hover:text-white transition-colors text-xs font-bold uppercase tracking-wider bg-dark-800 hover:bg-dark-700 p-2 px-4 rounded-lg border border-dark-700 hover:border-slate-500 shadow-lg w-fit">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+          Back to Home
+        </button>
+        <div className="mb-8 flex items-center gap-4 border-b border-dark-700 pb-6">
+           <div className="p-3 bg-amber-500/10 rounded-2xl border border-amber-500/20">
+             <Layers className="w-8 h-8 text-amber-400" />
+           </div>
