@@ -1458,3 +1458,23 @@ function ThermalConvectionModule({ onTelemetryUpdate, onBack }: ThermalConvectio
             </div>
             <input 
               type="range" min="-300" max="0" step="10" 
+              value={atmosphericCooling} onChange={e => setAtmosphericCooling(parseFloat(e.target.value))}
+              className="w-full accent-cyan-500"
+            />
+          </div>
+          <div>
+            <div className="flex justify-between text-xs mb-1">
+              <label className="text-slate-300">Buoyancy factor (β)</label>
+              <span className="text-amber-400 font-mono">{densityDifference.toFixed(2)}</span>
+            </div>
+            <input 
+              type="range" min="0.0" max="0.5" step="0.01" 
+              value={densityDifference} onChange={e => setDensityDifference(parseFloat(e.target.value))}
+              className="w-full accent-amber-500"
+            />
+          </div>
+          <div>
+            <div className="flex justify-between text-xs mb-1">
+              <label className="text-slate-300">Planetary Rotation (f)</label>
+              <span className="text-purple-400 font-mono">{planetaryRotation.toFixed(2)}</span>
+            </div>
