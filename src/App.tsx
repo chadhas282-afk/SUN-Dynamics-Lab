@@ -1738,3 +1738,33 @@ function HydraulicErosionModule({ onTelemetryUpdate, onBack }: HydraulicErosionP
       </div>
     </div>
   );
+  }
+interface OrbitalMechanicsProps {
+  onBack: () => void;
+  onTelemetryUpdate: (data: { fps: number; kineticEnergy: number; massDeviation: number }) => void;
+}
+function OrbitalMechanicsModule({ onTelemetryUpdate, onBack }: OrbitalMechanicsProps) {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const [scenario, setScenario] = useState<OrbitalScenarioType>('Galaxy');
+  const [gravitationalConstant, setGravitationalConstant] = useState(1.0);
+  const [timeStep, setTimeStep] = useState(0.01);
+  const [numBodies, setNumBodies] = useState(1000);
+  const solverRef = useRef<GravitySolver | null>(null);
+  const animFrameRef = useRef<number>(0);
+  const lastTimeRef = useRef<number>(performance.now());
+  const framesRef = useRef<number>(0);
+  const trailsRef = useRef<HTMLCanvasElement | null>(null);
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const width = 1000;
+    const height = 1000;
+    canvas.width = width;
+    canvas.height = height;
+    const ctx = canvas.getContext('2d', { alpha: false });
+    if (!ctx) return;
+    if (!trailsRef.current) {
+      const tCanvas = document.createElement('canvas');
+      tCanvas.width = width;
+      tCanvas.height = height;
+      trailsRef.current = tCanvas;
