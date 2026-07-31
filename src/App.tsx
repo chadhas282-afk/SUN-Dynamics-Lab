@@ -1298,3 +1298,23 @@ function ThermalConvectionModule({ onTelemetryUpdate, onBack }: ThermalConvectio
   const [atmosphericCooling, setAtmosphericCooling] = useState(-50.0);
   const [planetaryRotation, setPlanetaryRotation] = useState(0.5);
   const [densityDifference, setDensityDifference] = useState(0.1);
+  const solverRef = useRef<ConvectionSolver | null>(null);
+  const animFrameRef = useRef<number>(0);
+  const lastTimeRef = useRef<number>(performance.now());
+  const framesRef = useRef<number>(0);
+  const mousePosRef = useRef<{ x: number; y: number; isDown: boolean }>({ x: 0, y: 0, isDown: false });
+  const N = 128;
+  const SCALE = 5;
+  useEffect(() => {
+    const dt = 0.1;
+    const diff = 0.0001;
+    const visc = 0.0001;
+    solverRef.current = new ConvectionSolver(N, diff, visc, dt);
+    solverRef.current.ambientT = 0;
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d', { alpha: false });
+    if (!ctx) return;
+    const imgData = ctx.createImageData(N + 2, N + 2);
+    const renderLoop = (time: number) => {
+      const solver = solverRef.current;
