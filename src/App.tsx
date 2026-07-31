@@ -1888,3 +1888,33 @@ function OrbitalMechanicsModule({ onTelemetryUpdate, onBack }: OrbitalMechanicsP
               className="w-full accent-rose-500"
             />
           </div>
+          <div>
+            <div className="flex justify-between text-xs mb-1">
+              <label className="text-slate-300">Time Step (dt)</label>
+              <span className="text-emerald-400 font-mono">{timeStep.toFixed(3)}</span>
+            </div>
+            <input 
+              type="range" min="0.001" max="0.05" step="0.001" 
+              value={timeStep} onChange={e => setTimeStep(parseFloat(e.target.value))}
+              className="w-full accent-emerald-500"
+            />
+          </div>
+        </div>
+      </div>
+      <div className="flex-1 flex items-center justify-center bg-black overflow-hidden relative">
+        <canvas 
+          ref={canvasRef}
+          className="bg-black shadow-[0_0_50px_rgba(0,0,0,1)] rounded-sm w-full h-full object-contain"
+        />
+        <div className="absolute inset-0 pointer-events-none mix-blend-screen"
+             style={{ background: 'radial-gradient(circle at center, transparent 0%, rgba(10,10,30,0.8) 100%)' }}>
+        </div>
+      </div>
+    </div>
+  );
+}
+const CONCEPTS = [
+  {
+    category: "Fundamental Equations & Approximations",
+    icon: <Calculator className="w-5 h-5 text-blue-400" />,
+    items: [
