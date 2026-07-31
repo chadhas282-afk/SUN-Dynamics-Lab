@@ -2008,3 +2008,33 @@ function MiniSimulationsGallery({ onBack }: { onBack: () => void }) {
                  </div>
                ))}
              </React.Fragment>
+             ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+interface HomeDashboardProps {
+  onNavigate: (module: 'aerodynamics' | 'convection' | 'erosion' | 'orbital' | 'gallery') => void;
+}
+function HomeDashboard({ onNavigate }: HomeDashboardProps) {
+  return (
+    <div className="flex-1 w-full h-full bg-dark-900 overflow-y-auto custom-scrollbar relative">
+      <div className="absolute inset-0 pointer-events-none overflow-hidden h-[150vh]">
+        <div className="absolute top-[0%] left-[0%] w-[50%] h-[50%] bg-blue-500/5 blur-[120px] rounded-full animate-pulse" style={{ animationDuration: '8s' }} />
+        <div className="absolute top-[30%] right-[0%] w-[50%] h-[50%] bg-purple-500/5 blur-[120px] rounded-full animate-pulse" style={{ animationDuration: '12s' }} />
+        <div className="absolute top-[70%] left-[20%] w-[50%] h-[50%] bg-amber-500/5 blur-[120px] rounded-full animate-pulse" style={{ animationDuration: '10s' }} />
+        <div className="absolute inset-0" style={{ backgroundImage: 'linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px)', backgroundSize: '40px 40px' }} />
+      </div>
+      <div className="relative z-10 max-w-7xl mx-auto px-4 md:px-8 py-8 md:py-16 flex flex-col min-h-full">
+        <div className="text-center mb-20 pt-10">
+          <div className="inline-flex items-center justify-center mb-6">
+            <img src="/logo.png" alt="SUN Dynamics Logo" className="w-24 h-24 md:w-32 md:h-32 object-contain drop-shadow-[0_0_30px_rgba(245,158,11,0.5)]" />
+          </div>
+          <h1 className="text-4xl md:text-7xl font-black text-transparent bg-clip-text bg-gradient-to-r from-white via-slate-200 to-slate-500 tracking-tight mb-4 md:mb-6">
+            SUN Dynamics Lab
+          </h1>
+          <p className="text-xl text-slate-400 max-w-2xl mx-auto leading-relaxed">
+            A high-performance computational physics laboratory running real-time 
+            Navier-Stokes, Boussinesq, and Shallow Water solvers directly in your browser.
+          </p>
