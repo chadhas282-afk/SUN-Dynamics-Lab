@@ -1528,3 +1528,33 @@ function HydraulicErosionModule({ onTelemetryUpdate, onBack }: HydraulicErosionP
   const N = 128;
   const SCALE = 5;
   useEffect(() => {
+    solverRef.current = new ErosionSolver(N);
+    solverRef.current.generateTerrain(terrainType);
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d', { alpha: false });
+    if (!ctx) return;
+    const imgData = ctx.createImageData(N, N);
+    const renderLoop = (time: number) => {
+      const solver = solverRef.current;
+      if (!solver) return;
+      solver.rainfall = rainfallIntensity;
+      solver.erodibility = soilErodibility;
+      solver.deposition = depositionRate;
+      if (mousePosRef.current.isDown) {
+        const mx = Math.floor(mousePosRef.current.x);
+        const my = Math.floor(mousePosRef.current.y);
+        const radius = 3;
+        for (let j = -radius; j <= radius; j++) {
+           for (let i = -radius; i <= radius; i++) {
+              if (i*i + j*j <= radius*radius) {
+                 const x = mx + i;
+                 const y = my + j;
+                 if (x >= 0 && x < N && y >= 0 && y < N) {
+                    if (brushMode === 'Raise Terrain') {
+                       solver.height[y * N + x] += 0.05;
+                    } else {
+                       solver.height[y * N + x] = Math.max(0, solver.height[y * N + x] - 0.05);
+                    }
+                 }
+              }
