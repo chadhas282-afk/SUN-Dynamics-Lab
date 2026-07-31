@@ -1348,3 +1348,33 @@ function ThermalConvectionModule({ onTelemetryUpdate, onBack }: ThermalConvectio
         let massDev = 0;
         for (let i = 0; i < solver.Vx.length; i++) {
           const vx = solver.Vx[i];
+          const vy = solver.Vy[i];
+          ke += vx * vx + vy * vy;
+          massDev += Math.abs(solver.div[i]);
+        }
+        onTelemetryUpdate({ fps, kineticEnergy: ke, massDeviation: massDev });
+        lastTimeRef.current = time;
+        framesRef.current = 0;
+      }
+      animFrameRef.current = requestAnimationFrame(renderLoop);
+    };
+    animFrameRef.current = requestAnimationFrame(renderLoop);
+    return () => {
+      cancelAnimationFrame(animFrameRef.current);
+      solverRef.current = null;
+    };
+  }, [onTelemetryUpdate, surfaceHeating, atmosphericCooling, densityDifference, planetaryRotation]);
+  const handlePointer = (e: React.PointerEvent<HTMLCanvasElement>, isDown?: boolean) => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const rect = canvas.getBoundingClientRect();
+    const scaleX = (N + 2) / rect.width;
+    const scaleY = (N + 2) / rect.height;
+    const x = (e.clientX - rect.left) * scaleX;
+    const y = (e.clientY - rect.top) * scaleY;
+    if (isDown !== undefined) {
+      mousePosRef.current.isDown = isDown;
+    }
+    mousePosRef.current.x = x;
+    mousePosRef.current.y = y;
+  };
