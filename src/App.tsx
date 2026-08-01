@@ -2118,3 +2118,23 @@ function HomeDashboard({ onNavigate }: HomeDashboardProps) {
               <div className="p-4 bg-teal-500/10 text-teal-400 rounded-2xl border border-teal-500/20 group-hover:scale-110 transition-transform duration-500">
                 <BookOpen className="w-8 h-8" />
               </div>
+              </div>
+            <h2 className="text-xl font-bold text-white mb-3 group-hover:text-teal-400 transition-colors">Mini-Simulations</h2>
+            <p className="text-slate-400 text-xs leading-relaxed mb-6">
+              Explore a curated gallery of high-performance animations illustrating key theoretical concepts in atmospheric physics and equations.
+            </p>
+            <div className="flex flex-wrap gap-2">
+              <span className="text-[9px] uppercase tracking-wider font-bold text-slate-500 bg-dark-900 px-3 py-1 rounded-full border border-dark-700">Gallery</span>
+              <span className="text-[9px] uppercase tracking-wider font-bold text-slate-500 bg-dark-900 px-3 py-1 rounded-full border border-dark-700">Equations</span>
+            </div>
+          </button>
+
+</div>
+<div className="mt-auto pt-8 border-t border-dark-700 flex justify-between items-center text-xs text-slate-600 font-mono">
+           <span>Engine Status: ONLINE</span>
+           <span>CPU Backend: Float32Array</span>
+        </div>
+      </div>
+    </div>
+  );
+}
