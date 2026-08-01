@@ -2158,3 +2158,23 @@ function App() {
       case 'aerodynamics':
         return <AerodynamicsModule onTelemetryUpdate={setTelemetry} onBack={() => setActiveModule("home")} />;
       case 'convection':
+        return <ThermalConvectionModule onTelemetryUpdate={setTelemetry} onBack={() => setActiveModule("home")} />;
+      case 'erosion':
+        return <HydraulicErosionModule onTelemetryUpdate={setTelemetry} onBack={() => setActiveModule("home")} />;
+      case 'orbital':
+        return <OrbitalMechanicsModule onTelemetryUpdate={setTelemetry} onBack={() => setActiveModule("home")} />;
+      case 'gallery':
+        return <MiniSimulationsGallery onBack={() => setActiveModule("home")} />;
+      default:
+        return null;
+    }
+  };
+  return (
+    <div className="flex h-screen w-screen bg-dark-900 text-slate-200 overflow-hidden font-sans">
+      <main className="flex-1 relative bg-black flex">
+        {renderActiveModule()}
+      </main>
+    </div>
+  );
+}
+export default App;
