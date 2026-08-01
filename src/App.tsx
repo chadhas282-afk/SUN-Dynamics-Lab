@@ -2068,3 +2068,33 @@ function HomeDashboard({ onNavigate }: HomeDashboardProps) {
                 <ThermometerSun className="w-8 h-8" />
               </div>
             </div>
+            <h2 className="text-xl font-bold text-white mb-3 group-hover:text-rose-400 transition-colors">Thermal Convection</h2>
+            <p className="text-slate-400 text-xs leading-relaxed mb-6">
+              Simulate buoyancy-driven flows using the Boussinesq approximation. Introduce planetary rotation 
+              to observe Coriolis forces deflecting rising thermal plumes into cyclonic structures.
+            </p>
+            <div className="flex flex-wrap gap-2">
+              <span className="text-[9px] uppercase tracking-wider font-bold text-slate-500 bg-dark-900 px-3 py-1 rounded-full border border-dark-700">Boussinesq</span>
+              <span className="text-[9px] uppercase tracking-wider font-bold text-slate-500 bg-dark-900 px-3 py-1 rounded-full border border-dark-700">Coriolis Force</span>
+            </div>
+          </button>
+          <button onClick={() => onNavigate('erosion')} className="group text-left bg-dark-800/50 backdrop-blur-sm border border-dark-700 p-8 rounded-3xl hover:bg-dark-800 hover:border-emerald-500/50 transition-all duration-500 relative overflow-hidden">
+            <div className="absolute top-0 right-0 w-32 h-32 bg-emerald-500/10 blur-[50px] rounded-full group-hover:bg-emerald-500/20 transition-all duration-500" />
+            <div className="flex items-start justify-between mb-6">
+              <div className="p-4 bg-emerald-500/10 text-emerald-400 rounded-2xl border border-emerald-500/20 group-hover:scale-110 transition-transform duration-500">
+                <Waves className="w-8 h-8" />
+              </div>
+            </div>
+            <h2 className="text-xl font-bold text-white mb-3 group-hover:text-emerald-400 transition-colors">Hydraulic Erosion</h2>
+            <p className="text-slate-400 text-xs leading-relaxed mb-6">
+              Calculate shallow water flow (Saint-Venant equations) over procedurally generated 
+              fractal noise terrain. Watch as water pools, flows, and deposits sediment over time.
+            </p>
+            <div className="flex flex-wrap gap-2">
+              <span className="text-[9px] uppercase tracking-wider font-bold text-slate-500 bg-dark-900 px-3 py-1 rounded-full border border-dark-700">Shallow Water</span>
+              <span className="text-[9px] uppercase tracking-wider font-bold text-slate-500 bg-dark-900 px-3 py-1 rounded-full border border-dark-700">Sediment</span>
+            </div>
+          </button>
+          <button onClick={() => onNavigate('orbital')} className="group text-left bg-dark-800/50 backdrop-blur-sm border border-dark-700 p-8 rounded-3xl hover:bg-dark-800 hover:border-purple-500/50 transition-all duration-500 relative overflow-hidden">
+            <div className="absolute top-0 right-0 w-32 h-32 bg-purple-500/10 blur-[50px] rounded-full group-hover:bg-purple-500/20 transition-all duration-500" />
+            <div className="flex items-start justify-between mb-6"></div>
