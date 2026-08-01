@@ -1,3 +1,5 @@
+@import "tailwindcss";
+
 @theme {
   --color-dark-900: #0f1115;
   --color-dark-800: #161920;
@@ -16,7 +18,7 @@ body {
   color: #e2e8f0;
   font-family: 'Inter', system-ui, -apple-system, sans-serif;
   overflow: hidden;
-  }
+}
 
 ::-webkit-scrollbar {
   width: 6px;

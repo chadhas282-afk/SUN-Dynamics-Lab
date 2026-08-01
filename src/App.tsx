@@ -898,7 +898,7 @@ function ThermalConvectionAnimation() {
           20% { opacity: 1; }
           80% { opacity: 1; }
           100% { transform: translateX(-50%) translateY(-180px) scale(1.5); opacity: 0; }
-          }
+        }
       `}</style>
     </div>
   );
@@ -978,7 +978,7 @@ function AerodynamicsModule({ onTelemetryUpdate, onBack }: AerodynamicsProps) {
             solver.addVelocity(N - 1, j, -flowVelocity, 0);
             if (visualMode === 'Smoke Tracers' && j % 8 === 0) solver.addDensity(N - 1, j, 50.0);
           }
-          }
+        }
       } else {
         for (let j = 1; j <= N; j++) {
           if (j > 10 && j < N - 10) {
@@ -1018,7 +1018,7 @@ function AerodynamicsModule({ onTelemetryUpdate, onBack }: AerodynamicsProps) {
         let ke = 0;
         let massDev = 0;
         for (let i = 0; i < solver.Vx.length; i++) {
-           if (solver.obstacles[i] === 0) {
+          if (solver.obstacles[i] === 0) {
             const vx = solver.Vx[i];
             const vy = solver.Vy[i];
             ke += vx * vx + vy * vy;
@@ -1058,7 +1058,7 @@ function AerodynamicsModule({ onTelemetryUpdate, onBack }: AerodynamicsProps) {
     } else {
        mousePosRef.current.vx = 0;
        mousePosRef.current.vy = 0;
-       }
+    }
     mousePosRef.current.x = x;
     mousePosRef.current.y = y;
   };
@@ -1078,7 +1078,7 @@ function AerodynamicsModule({ onTelemetryUpdate, onBack }: AerodynamicsProps) {
         }
       }
     } else if (type === 'Flat Plate') {
-       const width = 4;
+      const width = 4;
       const height = 40;
       for (let j = cy - height/2; j <= cy + height/2; j++) {
         for (let i = cx - width/2; i <= cx + width/2; i++) {
@@ -1098,7 +1098,7 @@ function AerodynamicsModule({ onTelemetryUpdate, onBack }: AerodynamicsProps) {
                solver.obstacles[solver.IX(i, j)] = 1;
              }
           }
-           }
+        }
       }
     } else if (type === 'Kelvin-Helmholtz') {
       for (let i = 1; i <= N; i++) {
@@ -1118,7 +1118,7 @@ function AerodynamicsModule({ onTelemetryUpdate, onBack }: AerodynamicsProps) {
         const idx = i * 4;
         if (solver.obstacles[i] === 1) {
           data[idx] = 200; data[idx+1] = 200; data[idx+2] = 200; data[idx+3] = 255;
-          } else {
+        } else {
           let d = solver.density[i];
           d = Math.min(255, Math.max(0, d * 255));
           data[idx] = d;
@@ -1258,7 +1258,7 @@ function AerodynamicsModule({ onTelemetryUpdate, onBack }: AerodynamicsProps) {
             <div className="flex flex-col gap-2">
               {['Inject Fluid', 'Draw Obstacle'].map(mode => (
                 <button 
-                key={mode}
+                  key={mode}
                   onClick={() => setBrushMode(mode as AeroBrushMode)}
                   className={`px-3 py-2 text-xs rounded border transition-all ${brushMode === mode ? 'bg-emerald-500/20 border-emerald-500 text-white' : 'border-dark-700 text-slate-400 hover:bg-dark-700'}`}
                 >
@@ -1398,7 +1398,7 @@ function ThermalConvectionModule({ onTelemetryUpdate, onBack }: ThermalConvectio
         data[idx+1] = norm * 200;
         data[idx+2] = norm * 255;
       }
-       data[idx+3] = 255;
+      data[idx+3] = 255;
     }
     createImageBitmap(imgData).then(bmp => {
       ctx.imageSmoothingEnabled = false;
@@ -1558,7 +1558,7 @@ function HydraulicErosionModule({ onTelemetryUpdate, onBack }: HydraulicErosionP
                     }
                  }
               }
-              }
+           }
         }
       }
       solver.step();
@@ -1618,7 +1618,7 @@ function HydraulicErosionModule({ onTelemetryUpdate, onBack }: HydraulicErosionP
       if (h < 0.2) {
         r = 194; g = 178; b = 128;
       } else if (h < 0.6) {
-         r = 34; g = 139; b = 34;
+        r = 34; g = 139; b = 34;
       } else if (h < 0.8) {
         r = 100; g = 100; b = 100;
       } else {
@@ -1678,7 +1678,7 @@ function HydraulicErosionModule({ onTelemetryUpdate, onBack }: HydraulicErosionP
               value={rainfallIntensity} onChange={e => setRainfallIntensity(parseFloat(e.target.value))}
               className="w-full accent-blue-500"
             />
-            </div>
+          </div>
           <div>
             <div className="flex justify-between text-xs mb-1">
               <label className="text-slate-300">Soil Erodibility (Kr)</label>
@@ -1738,7 +1738,7 @@ function HydraulicErosionModule({ onTelemetryUpdate, onBack }: HydraulicErosionP
       </div>
     </div>
   );
-  }
+}
 interface OrbitalMechanicsProps {
   onBack: () => void;
   onTelemetryUpdate: (data: { fps: number; kineticEnergy: number; massDeviation: number }) => void;
@@ -1768,7 +1768,7 @@ function OrbitalMechanicsModule({ onTelemetryUpdate, onBack }: OrbitalMechanicsP
       tCanvas.width = width;
       tCanvas.height = height;
       trailsRef.current = tCanvas;
-      }
+    }
     const tCtx = trailsRef.current.getContext('2d');
     if (tCtx) {
       tCtx.fillStyle = 'black';
@@ -1828,7 +1828,7 @@ function OrbitalMechanicsModule({ onTelemetryUpdate, onBack }: OrbitalMechanicsP
           tCtx.fillStyle = '#60a5fa';
         } else if (vSq > 100) {
           tCtx.fillStyle = '#fbbf24';
-          } else {
+        } else {
           tCtx.fillStyle = '#f43f5e';
         }
         tCtx.shadowBlur = 0;
@@ -1948,7 +1948,7 @@ const CONCEPTS = [
     icon: <Droplets className="w-5 h-5 text-teal-400" />,
     items: [
       { name: "Convection", desc: "The transfer of heat by the bulk movement of a fluid, typically vertically driven by buoyancy.", eq: "Q = hA(T_s - T_∞)", animation: <ThermalConvectionAnimation /> }
-      ]
+    ]
   },
   {
     category: "Global & Synoptic-Scale Systems",
@@ -2008,7 +2008,7 @@ function MiniSimulationsGallery({ onBack }: { onBack: () => void }) {
                  </div>
                ))}
              </React.Fragment>
-             ))}
+          ))}
         </div>
       </div>
     </div>
@@ -2038,7 +2038,7 @@ function HomeDashboard({ onNavigate }: HomeDashboardProps) {
             A high-performance computational physics laboratory running real-time 
             Navier-Stokes, Boussinesq, and Shallow Water solvers directly in your browser.
           </p>
-          </div>
+        </div>
         <div className="mb-8 flex items-center gap-3 border-b border-dark-700 pb-4">
            <Activity className="w-6 h-6 text-emerald-400" />
            <h2 className="text-2xl font-bold text-white tracking-wide">Interactive Physics Solvers</h2>
@@ -2118,7 +2118,7 @@ function HomeDashboard({ onNavigate }: HomeDashboardProps) {
               <div className="p-4 bg-teal-500/10 text-teal-400 rounded-2xl border border-teal-500/20 group-hover:scale-110 transition-transform duration-500">
                 <BookOpen className="w-8 h-8" />
               </div>
-              </div>
+            </div>
             <h2 className="text-xl font-bold text-white mb-3 group-hover:text-teal-400 transition-colors">Mini-Simulations</h2>
             <p className="text-slate-400 text-xs leading-relaxed mb-6">
               Explore a curated gallery of high-performance animations illustrating key theoretical concepts in atmospheric physics and equations.
