@@ -2038,3 +2038,33 @@ function HomeDashboard({ onNavigate }: HomeDashboardProps) {
             A high-performance computational physics laboratory running real-time 
             Navier-Stokes, Boussinesq, and Shallow Water solvers directly in your browser.
           </p>
+          </div>
+        <div className="mb-8 flex items-center gap-3 border-b border-dark-700 pb-4">
+           <Activity className="w-6 h-6 text-emerald-400" />
+           <h2 className="text-2xl font-bold text-white tracking-wide">Interactive Physics Solvers</h2>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6 mb-24">
+          <button onClick={() => onNavigate('aerodynamics')} className="group text-left bg-dark-800/50 backdrop-blur-sm border border-dark-700 p-8 rounded-3xl hover:bg-dark-800 hover:border-blue-500/50 transition-all duration-500 relative overflow-hidden">
+            <div className="absolute top-0 right-0 w-32 h-32 bg-blue-500/10 blur-[50px] rounded-full group-hover:bg-blue-500/20 transition-all duration-500" />
+            <div className="flex items-start justify-between mb-6">
+              <div className="p-4 bg-blue-500/10 text-blue-400 rounded-2xl border border-blue-500/20 group-hover:scale-110 transition-transform duration-500">
+                <Wind className="w-8 h-8" />
+              </div>
+            </div>
+            <h2 className="text-xl font-bold text-white mb-3 group-hover:text-blue-400 transition-colors">Aerodynamics Tunnel</h2>
+            <p className="text-slate-400 text-xs leading-relaxed mb-6">
+              Solve the incompressible Navier-Stokes equations using a staggered Eulerian grid. 
+              Visualize velocity vectors, pressure fields, and turbulent smoke tracers past rigid obstacles.
+            </p>
+            <div className="flex flex-wrap gap-2">
+              <span className="text-[9px] uppercase tracking-wider font-bold text-slate-500 bg-dark-900 px-3 py-1 rounded-full border border-dark-700">Eulerian Grid</span>
+              <span className="text-[9px] uppercase tracking-wider font-bold text-slate-500 bg-dark-900 px-3 py-1 rounded-full border border-dark-700">Poisson Projection</span>
+            </div>
+          </button>
+          <button onClick={() => onNavigate('convection')} className="group text-left bg-dark-800/50 backdrop-blur-sm border border-dark-700 p-8 rounded-3xl hover:bg-dark-800 hover:border-rose-500/50 transition-all duration-500 relative overflow-hidden">
+            <div className="absolute top-0 right-0 w-32 h-32 bg-rose-500/10 blur-[50px] rounded-full group-hover:bg-rose-500/20 transition-all duration-500" />
+            <div className="flex items-start justify-between mb-6">
+              <div className="p-4 bg-rose-500/10 text-rose-400 rounded-2xl border border-rose-500/20 group-hover:scale-110 transition-transform duration-500">
+                <ThermometerSun className="w-8 h-8" />
+              </div>
+            </div>
