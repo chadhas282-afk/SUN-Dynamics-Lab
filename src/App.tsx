@@ -2138,3 +2138,23 @@ function HomeDashboard({ onNavigate }: HomeDashboardProps) {
     </div>
   );
 }
+type ModuleType = 'home' | 'aerodynamics' | 'convection' | 'erosion' | 'orbital' | 'gallery';
+interface TelemetryData {
+  fps: number;
+  kineticEnergy: number;
+  massDeviation: number;
+}
+function App() {
+  const [activeModule, setActiveModule] = useState<ModuleType>('home');
+  const [telemetry, setTelemetry] = useState<TelemetryData>({
+    fps: 0,
+    kineticEnergy: 0,
+    massDeviation: 0,
+  });
+  const renderActiveModule = () => {
+    switch (activeModule) {
+      case 'home':
+        return <HomeDashboard onNavigate={setActiveModule} />;
+      case 'aerodynamics':
+        return <AerodynamicsModule onTelemetryUpdate={setTelemetry} onBack={() => setActiveModule("home")} />;
+      case 'convection':
