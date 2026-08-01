@@ -2097,4 +2097,24 @@ function HomeDashboard({ onNavigate }: HomeDashboardProps) {
           </button>
           <button onClick={() => onNavigate('orbital')} className="group text-left bg-dark-800/50 backdrop-blur-sm border border-dark-700 p-8 rounded-3xl hover:bg-dark-800 hover:border-purple-500/50 transition-all duration-500 relative overflow-hidden">
             <div className="absolute top-0 right-0 w-32 h-32 bg-purple-500/10 blur-[50px] rounded-full group-hover:bg-purple-500/20 transition-all duration-500" />
-            <div className="flex items-start justify-between mb-6"></div>
+            <div className="flex items-start justify-between mb-6">
+              <div className="p-4 bg-purple-500/10 text-purple-400 rounded-2xl border border-purple-500/20 group-hover:scale-110 transition-transform duration-500">
+                <Orbit className="w-8 h-8" />
+              </div>
+            </div>
+            <h2 className="text-xl font-bold text-white mb-3 group-hover:text-purple-400 transition-colors">Orbital Mechanics</h2>
+            <p className="text-slate-400 text-xs leading-relaxed mb-6">
+              Simulate N-Body gravitational physics using a Symplectic Euler integrator. Watch massive galaxies collide or delicate binary star systems dance in space.
+            </p>
+            <div className="flex flex-wrap gap-2">
+              <span className="text-[9px] uppercase tracking-wider font-bold text-slate-500 bg-dark-900 px-3 py-1 rounded-full border border-dark-700">Symplectic</span>
+              <span className="text-[9px] uppercase tracking-wider font-bold text-slate-500 bg-dark-900 px-3 py-1 rounded-full border border-dark-700">N-Body</span>
+            </div>
+          </button>
+
+          <button onClick={() => onNavigate('gallery')} className="group text-left bg-dark-800/50 backdrop-blur-sm border border-dark-700 p-8 rounded-3xl hover:bg-dark-800 hover:border-teal-500/50 transition-all duration-500 relative overflow-hidden">
+            <div className="absolute top-0 right-0 w-32 h-32 bg-teal-500/10 blur-[50px] rounded-full group-hover:bg-teal-500/20 transition-all duration-500" />
+            <div className="flex items-start justify-between mb-6">
+              <div className="p-4 bg-teal-500/10 text-teal-400 rounded-2xl border border-teal-500/20 group-hover:scale-110 transition-transform duration-500">
+                <BookOpen className="w-8 h-8" />
+              </div>
